@@ -1,0 +1,88 @@
+
+#####################
+# MANIPULATE SPACES #
+#####################
+
+# Switch spaces
+fn - l :              yabai -m space --focus next || \
+                      yabai -m space --focus first
+
+fn - h :              yabai -m space --focus prev || \
+                      yabai -m space --focus last
+
+# Create spacet
+fn + cmd - t :        yabai -m space --create && \
+                      yabai -m space --focus last
+
+# Delete space
+# fn + cmd - w :        destroy=$(yabai -m query --spaces --space) && yabai -m space --destroy && yabai -m space --focus $destroy[id]
+
+
+
+######################
+# MANIPULATE WINDOWS #
+######################
+
+
+# make active window floating
+fn - f :              yabai -m window --toggle float && \
+                      yabai -m window --move abs:100:100 && \
+                      yabai -m window --resize abs:1200:600
+
+# switch focus to next window
+fn - k :            yabai -m window --focus next || \
+                      yabai -m window --focus first
+
+fn - j :    yabai -m window --focus prev || \
+                      yabai -m window --focus last
+
+# Switch focus NSWE
+fn + cmd - h :	      yabai -m window --focus west
+fn + cmd - j :	      yabai -m window --focus south 
+fn + cmd - k :	      yabai -m window --focus north
+fn + cmd - l :	      yabai -m window --focus east
+
+# Resize window to full screen
+fn - x :        yabai -m window --toggle zoom-fullscreen
+
+
+
+# Swap next
+fn + cmd - w :        yabai -m window --swap next || \
+                      yabai -m window --swap first
+
+# Swap NSWE
+fn + alt - k :        yabai -m window --swap north
+fn + alt - j :        yabai -m window --swap south
+fn + alt - h :        yabai -m window --swap west
+fn + alt - l :        yabai -m window --swap east
+
+# Move window left/right a space
+fn - q :             (yabai -m window --space prev && \
+                      yabai -m space --focus prev) || \
+                     (yabai -m window --space last && \
+                      yabai -m space --focus last)
+
+fn - s :             (yabai -m window --space next && \
+                      yabai -m space --focus next) || \
+                     (yabai -m window --space first && \
+                      yabai -m space --focus first)
+
+# Show Desktop
+fn - d :              yabai -m space --toggle show-desktop
+
+
+
+#############
+# SHORTCUTS #
+#############
+
+
+# Spotify
+fn + cmd - s :	      /Applications/Spotify.app/Contents/MacOS/Spotify
+
+# Discord
+fn + cmd - d :	      /Applications/Discord.app/Contents/MacOS/Discord
+
+# Firefox
+fn + cmd - f :	      /Applications/Firefox.app/Contents/MacOS/Firefox
