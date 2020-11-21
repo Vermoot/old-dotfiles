@@ -1,1 +1,0 @@
-{"title":"Space as shift","rules":[{"description":"Space as shift when pressed with anything else","manipulators":[{"type":"basic","from":{"key_code":"spacebar"},"to":[{"repeat":true,"key_code":"right_shift"}],"to_if_alone":[{"repeat":true,"key_code":"spacebar"}]}]}]}
