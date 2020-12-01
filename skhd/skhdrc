@@ -1,31 +1,31 @@
+
 #####################
 # MANIPULATE SPACES #
 #####################
 
-# Stack mode
-
-hyper - x :             yabai -m space --layout bsp
-
 # Switch spaces
-hyper - q :              mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
-                        yabai -m display --focus $mouse_display && \
-                        yabai -m space --focus "$(yabai -m query --spaces --display \
-                        | jq 'nth(index(map(select(.focused == 1))) - 1).index')"
+fn - l :              yabai -m space --focus next || \
+                      yabai -m space --focus first
 
+fn - h :              yabai -m space --focus prev || \
+                      yabai -m space --focus last
 
-hyper - s :             mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
-                        yabai -m display --focus $mouse_display && \
-                        yabai -m space --focus "$(yabai -m query --spaces --display \
-                        | jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
+ctrl - right :        mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
+                      yabai -m display --focus $mouse_display && \
+                      yabai -m space --focus "$(yabai -m query --spaces --display \
+                      | jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
 
-# Create space
-hyper - t :        yabai -m space --create && \
-                        yabai -m space --focus last
+ctrl - left:          mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
+                      yabai -m display --focus $mouse_display && \
+                      yabai -m space --focus "$(yabai -m query --spaces --display \
+                      | jq 'nth(index(map(select(.focused == 1))) - 1).index')" 
+
+# Create spacet
+fn + cmd - t :        yabai -m space --create && \
+                      yabai -m space --focus last
 
 # Delete space
-hyper - w :        destroy=$(yabai -m query --spaces --space | jq .index) && \
-                        (yabai -m space --focus next || yabai -m space --focus prev) && \
-                        yabai -m space $destroy --destroy
+# fn + cmd - w :        destroy=$(yabai -m query --spaces --space) && yabai -m space --destroy && yabai -m space --focus $destroy[id]
 
 
 
@@ -35,48 +35,67 @@ hyper - w :        destroy=$(yabai -m query --spaces --space | jq .index) && \
 
 
 # make active window floating
-ctrl - f :              yabai -m window --toggle float && \
-                        yabai -m window --move abs:100:100 && \
-                        yabai -m window --resize abs:1200:600
+fn - f :              yabai -m window --toggle float && \
+                      yabai -m window --move abs:100:100 && \
+                      yabai -m window --resize abs:1200:600
 
 # switch focus to next window
-cmd - tab :             yabai -m window --focus next || \
-                        yabai -m window --focus first
+fn - k :            yabai -m window --focus next || \
+                      yabai -m window --focus first
 
-#ctrl + shift - tab :   yabai -m window --focus prev || \
-#                       yabai -m window --focus last
+fn - j :    yabai -m window --focus prev || \
+                      yabai -m window --focus last
+
+# Switch focus NSWE
+fn + cmd - h :	      yabai -m window --focus west
+fn + cmd - j :	      yabai -m window --focus south 
+fn + cmd - k :	      yabai -m window --focus north
+fn + cmd - l :	      yabai -m window --focus east
 
 # Resize window to full screen
-ctrl - x :        yabai -m window --toggle zoom-fullscreen
-
-# Resize window under mouse to full screen
-ctrl + cmd + alt - x :  under=$(yabai -m query --windows --window mouse | jq .id) && \
-                        yabai -m window --focus $under && \
-                        yabai -m window --toggle zoom-fullscreen && \
-                        yabai -m window --toggle topmost
+fn - x :        yabai -m window --toggle zoom-fullscreen
 
 
 
 # Swap next
-ctrl - w :        yabai -m window --swap next || \
-                        yabai -m window --swap first
+fn + cmd - w :        yabai -m window --swap next || \
+                      yabai -m window --swap first
 
 # Swap NSWE
-#ctrl - z :        yabai -m window --swap north
-#ctrl - s :        yabai -m window --swap south
-#ctrl - q :        yabai -m window --swap west
-#ctrl - d :        yabai -m window --swap east
+fn + alt - k :        yabai -m window --swap north
+fn + alt - j :        yabai -m window --swap south
+fn + alt - h :        yabai -m window --swap west
+fn + alt - l :        yabai -m window --swap east
 
 # Move window left/right a space
-ctrl - q :             (yabai -m window --space prev && \
-                        yabai -m space --focus prev) || \
-                       (yabai -m window --space last && \
-                        yabai -m space --focus last)
+fn - q :             (yabai -m window --space prev && \
+                      yabai -m space --focus prev) || \
+                     (yabai -m window --space last && \
+                      yabai -m space --focus last)
 
-ctrl - s :             (yabai -m window --space next && \
-                        yabai -m space --focus next) || \
-                       (yabai -m window --space first && \
-                        yabai -m space --focus first)
+fn - s :             (yabai -m window --space next && \
+                      yabai -m space --focus next) || \
+                     (yabai -m window --space first && \
+                      yabai -m space --focus first)
 
 # Show Desktop
-ctrl - d :              yabai -m space --toggle show-desktop
+fn - d :              yabai -m space --toggle show-desktop
+
+
+
+#############
+# SHORTCUTS #
+#############
+
+
+# Spotify
+fn + cmd - s :	      yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Spotify") | .id')
+
+# Discord
+fn + cmd - d :	      yabai -m window --focus $(yabai -m query --windows| jq '.[] | select(.app=="Discord") | .id')
+
+# Firefox
+fn + cmd - f :	      yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Firefox") | .id')
+
+# Previous window
+fn + cmd - q :	      yabai -m window --focus recent
