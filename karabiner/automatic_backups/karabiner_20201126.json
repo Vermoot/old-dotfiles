@@ -488,6 +488,14 @@
                     "to": {
                         "key_code": "delete_or_backspace"
                     }
+                },
+                {
+                    "from": {
+                        "key_code": "left_control"
+                    },
+                    "to": {
+                        "key_code": "fn"
+                    }
                 }
             ],
             "virtual_hid_keyboard": {
