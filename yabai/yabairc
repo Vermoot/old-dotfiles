@@ -39,7 +39,7 @@ config window_gap                   06
 # EXCEPTIONS #
 ##############
 
-rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|1password" manage=off
+rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password" manage=off
 rule title="Discord Updater|Software Update" manage=off
 rule title='^Ouverture' manage=off layer=above
 
