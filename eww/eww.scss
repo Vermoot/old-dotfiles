@@ -1,0 +1,55 @@
+window {
+	background-color: transparent;
+}
+
+.bar {
+	font: 12px JetBrainsMono Nerd Font;
+	font-size: 12px;
+	color: black;
+	background-color: white;
+	margin: 8px;
+	border-radius: 5px;
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.space, .visible-space {
+	all: unset;
+	background-color: #dddddd;
+	border-radius: 3px;
+	margin: 3px;
+	font-size: 12px;
+	padding: 0 8px 0;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+	border: 1px solid rgba(0, 0, 0, 0.0);
+}
+
+.visible-space {
+	background-color: #5FAFFF;
+}
+
+.space:active {
+	background-color: #bbbbbb;
+	margin: 4px;
+	padding: 0 7px 0;
+	font-size: 11px;
+}
+
+.active-window {
+
+}
+
+.clock, .download {
+	margin-right: 7px;
+	background-color: #dddddd;
+	margin: 3px;
+	padding: 0 6px 0;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+	border: 1px solid rgba(0, 0, 0, 0.0);
+
+}
+
+.spaces {
+	all: unset;
+	border-color: transparent;
+}
