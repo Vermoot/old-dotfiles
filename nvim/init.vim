@@ -15,42 +15,22 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'rakr/vim-one'
 Plug 'vim-airline/vim-airline'
+Plug 'doums/darcula'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'machakann/vim-highlightedyank'
+Plug 'psliwka/vim-smoothie'
+Plug 'unblevable/quick-scope'
+Plug 'ap/vim-css-color'
 call plug#end()
 " }}}
 
-colorscheme one
-set background=dark " for the dark version
-" set background=light " for the light version
+colorscheme darcula
+let g:airline_powerline_fonts = 1
+let g:airline_theme='deus'
 
 set foldmethod=marker
 set number
 
 " Remaps {{{
-" Training wheels {{{
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
-nnoremap <Down> <Nop>
-nnoremap <Left> <Nop>
-nnoremap <Right> <Nop>
-nnoremap <Up> <Nop>
-vnoremap <Down> <Nop>
-vnoremap <Left> <Nop>
-vnoremap <Right> <Nop>
-vnoremap <Up> <Nop>
 
-inoremap <C-Left> <Nop>
-inoremap <C-Right> <Nop>
-nnoremap <C-Left> <Nop>
-nnoremap <C-Right> <Nop>
-vnoremap <C-Left> <Nop>
-vnoremap <C-Right> <Nop>
-
-
-nnoremap h <Nop>
-nnoremap l <Nop>
-vnoremap h <Nop>
-vnoremap l <Nop>
-" }}}
 " }}}

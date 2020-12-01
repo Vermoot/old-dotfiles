@@ -3,6 +3,8 @@
 # MANIPULATE SPACES #
 #####################
 
+# Manipulate spaces {{{
+
 # Switch spaces
 fn - l :              yabai -m space --focus next || \
                       yabai -m space --focus first
@@ -10,19 +12,20 @@ fn - l :              yabai -m space --focus next || \
 fn - h :              yabai -m space --focus prev || \
                       yabai -m space --focus last
 
-# Create spacet
-fn + cmd - t :        yabai -m space --create && \
+# Create space
+fn - t :        yabai -m space --create && \
                       yabai -m space --focus last
 
 # Delete space
-# fn + cmd - w :        destroy=$(yabai -m query --spaces --space) && yabai -m space --destroy && yabai -m space --focus $destroy[id]
+fn - w :        destroy=$(yabai -m query --spaces --space | jq .index) && (yabai -m space --focus next || yabai -m space --focus prev) && yabai -m space --destroy $destroy
 
-
+# }}}
 
 ######################
 # MANIPULATE WINDOWS #
 ######################
 
+# Manipulate windows {{{
 
 # make active window floating
 fn - f :              yabai -m window --toggle float && \
@@ -38,7 +41,7 @@ fn - j :    yabai -m window --focus prev || \
 
 # Switch focus NSWE
 fn + cmd - h :	      yabai -m window --focus west
-fn + cmd - j :	      yabai -m window --focus south 
+fn + cmd - j :	      yabai -m window --focus south
 fn + cmd - k :	      yabai -m window --focus north
 fn + cmd - l :	      yabai -m window --focus east
 
@@ -71,12 +74,13 @@ fn - s :             (yabai -m window --space next && \
 # Show Desktop
 fn - d :              yabai -m space --toggle show-desktop
 
-
+# }}}
 
 #############
 # SHORTCUTS #
 #############
 
+# Shortcuts {{{
 
 # Spotify
 fn + cmd - s :	      /Applications/Spotify.app/Contents/MacOS/Spotify
@@ -86,3 +90,5 @@ fn + cmd - d :	      /Applications/Discord.app/Contents/MacOS/Discord
 
 # Firefox
 fn + cmd - f :	      /Applications/Firefox.app/Contents/MacOS/Firefox
+
+# }}
