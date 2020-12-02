@@ -51,7 +51,6 @@ rule title='^Ouverture' manage=off layer=above
 ###############
 
 if [ $(yabai -m query --display | jq '. | length') = 2 ] ; then
-do
 	# Number of spaces on display 1
 	d1s=$(yabai -m query --spaces --display 1 | jq length)
 
@@ -69,7 +68,7 @@ do
 
 	# Messages to space 3 of display 2
 	rule app="Messages" space=$(($d1s+3))
-done
+fi
 
 
 ############
