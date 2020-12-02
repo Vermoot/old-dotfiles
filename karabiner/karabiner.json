@@ -325,6 +325,34 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "description": "Tab as Tab/Hyper",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "tab"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_gui",
+                                        "modifiers": [
+                                            "left_control",
+                                            "left_alt",
+                                            "left_shift"
+                                        ],
+                                        "repeat": true
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "tab",
+                                        "repeat": true
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
