@@ -50,12 +50,15 @@ rule title='^Ouverture' manage=off layer=above
 # HOME LAYOUT #
 ###############
 
-if [ $(yabai -m query --display | jq '. | length') = 2 ] ; then
+if [ $(yabai -m query --displays | jq '. | length') = 2 ] ; then
 	# Number of spaces on display 1
 	d1s=$(yabai -m query --spaces --display 1 | jq length)
 
 	# Firefox to space 1 of display 1
 	rule app="Firefox" space=1
+
+	# iTerm to space 2 of display 1
+	rule app="iTerm" space=2
 
 	# Spotify to space 1 of display 2
 	rule app="Spotify" space=$(($d1s+1))
