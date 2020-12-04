@@ -1,9 +1,9 @@
-#!/usr/bin/env sh
+# Aliases {{{
 alias rule="yabai -m rule --add"
 alias config="yabai -m config"
+# }}}
 
-
-# global settings
+# Global settings {{{
 config mouse_follows_focus          off
 config focus_follows_mouse          on
 config window_placement             second_child
@@ -32,23 +32,25 @@ config bottom_padding               8
 config left_padding                 8
 config right_padding                8
 config window_gap                   06
-
+# }}}
 
 
 ##############
 # EXCEPTIONS #
 ##############
+# Exceptions {{{
 
-rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password" manage=off
+rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password|Messages" manage=off
 rule title="Discord Updater|Software Update" manage=off
 rule title='^Ouverture' manage=off layer=above
 
-
+# }}}
 
 
 ###############
 # HOME LAYOUT #
 ###############
+# Home layout {{{
 
 if [ $(yabai -m query --display | jq '. | length') = 2 ] ; then
 	# Number of spaces on display 1
@@ -70,10 +72,12 @@ if [ $(yabai -m query --display | jq '. | length') = 2 ] ; then
 	rule app="Messages" space=$(($d1s+3))
 fi
 
+# }}}
 
 ############
 # EWWWWWWW #
 ############
+# Eww {{{
 
 yabai -m signal --add event=window_focused action='eww update yabai_active="$(yabai -m query --windows --window | jq -r .app) / $(yabai -m query --windows --window | jq -r .title)"'
 yabai -m signal --add event=application_front_switched action='eww update yabai_active="$(yabai -m query --windows --window | jq -r .app) / $(yabai -m query --windows --window | jq -r .title)"'
@@ -81,3 +85,5 @@ yabai -m signal --add event=window_title_changed action='eww update yabai_active
 
 yabai -m signal --add event=space_changed action='eww update yabai_active_space="$(yabai -m query --spaces --space | jq .index)"'
 yabai -m signal --add event=display_changed action='eww update yabai_active_space="$(yabai -m query --spaces --space | jq .index)"'
+
+# }}}

@@ -327,7 +327,7 @@
                         ]
                     },
                     {
-                        "description": "Tab as Tab/Hyper",
+                        "description": "Tab as Tab/Meh",
                         "manipulators": [
                             {
                                 "from": {
@@ -335,9 +335,8 @@
                                 },
                                 "to": [
                                     {
-                                        "key_code": "left_gui",
+                                        "key_code": "left_control",
                                         "modifiers": [
-                                            "left_control",
                                             "left_alt",
                                             "left_shift"
                                         ],

@@ -62,7 +62,7 @@ fn - x :        yabai -m window --toggle zoom-fullscreen
 
 
 # Swap next
-fn + cmd - w :        yabai -m window --swap next || \
+fn + alt - w :        yabai -m window --swap next || \
                       yabai -m window --swap first
 
 # Swap NSWE
@@ -94,13 +94,21 @@ fn - d :              yabai -m space --toggle show-desktop
 # Shortcuts {{{
 
 # Spotify
-fn + cmd - s :	      yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Spotify") | .id')
+fn + cmd - s :		app="Spotify" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 # Discord
-fn + cmd - d :	      yabai -m window --focus $(yabai -m query --windows| jq '.[] | select(.app=="Discord") | .id')
+fn + cmd - d :		app="Discord" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 # Firefox
-fn + cmd - f :	      yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app=="Firefox") | .id')
+fn + cmd - f :		app="Firefox" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+
+# Messages
+fn + cmd - m :		app="Messages" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+
+# iTerm
+fn + cmd - i :		app="iTerm2" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+
+
 
 # Previous window
 fn + cmd - q :	      yabai -m window --focus recent
@@ -112,22 +120,27 @@ fn + cmd - q :	      yabai -m window --focus recent
 ################
 # App-specific {{{
 
-# Discord navigation
-# Up/Down channels
-hyper - j [
+# Up/Down navigation
+meh - j [
     "Discord" : skhd -k "alt - down"
+    "Messages" : skhd -k "ctrl - tab"
 ]
 
-hyper - k [
+meh - k [
     "Discord" : skhd -k "alt - up"
+    "Messages" : skhd -k "ctrl + shift - tab"
 ]
 
-hyper - h [
+meh - h [
     "Discord" : skhd -k "cmd + alt - down"
 ]
 
-hyper - l [
+meh - l [
     "Discord" : skhd -k "cmd + alt - up"
 ]
 
+hyper - j : skhd -k "pagedown"
+hyper - k : skhd -k "pageup"
 # }}}
+
+cmd - tab :
