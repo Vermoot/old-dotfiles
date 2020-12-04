@@ -106,7 +106,7 @@ fn + cmd - f :		app="Firefox" && yabai -m window --focus $(yabai -m query --wind
 fn + cmd - m :		app="Messages" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 # iTerm
-fn + cmd - i :		app="iTerm2" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+fn + cmd - i :		app="iTerm" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 
 
