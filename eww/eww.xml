@@ -18,7 +18,7 @@
 
 
 		<def name="main">
-			<box class="bar" orientation="h" space-evenly="false">
+			<box class="bar" orientation="h" space-evenly="true">
 				<box hexpand="true" halign="start">
 					<spaces/>
 				</box>
