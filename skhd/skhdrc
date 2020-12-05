@@ -82,6 +82,11 @@ fn - s :             (yabai -m window --space next && \
                      (yabai -m window --space first && \
                       yabai -m space --focus first)
 
+# Create new space and send active window
+fn + cmd - t :		yabai -m space --create && \
+			yabai -m window --space last && \
+			yabai -m space --focus last
+
 # Show Desktop
 fn - d :              yabai -m space --toggle show-desktop
 
