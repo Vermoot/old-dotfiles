@@ -8,6 +8,7 @@
 		<def name="current_window">
 			<label class="active-window" text="{{active_window}}"/>
 		</def>
+		<def name="test"> <label class="test" text="{{test}}"/> </def>
 		<def name="download">
 			<label class="download" text="↓ {{download_speed}}"/>
 		</def>
@@ -25,7 +26,8 @@
 					<current_window active_window="{{yabai_active}}"/>
 				</box>
 				<box hexpand="true" halign="end">
-					<box>
+					<box space-evenly="false">
+						<test/>
 						<download/>
 						<clock/>
 					</box>
@@ -37,6 +39,7 @@
 	<variables>
 		<var name="yabai_active"/>
 		<var name="spaces"/>
+		<var name="test">test</var>
 		<script-var name="time" interval="1s"> date +"%R" </script-var>
 		<script-var name="download_speed">echo "535 ko/s"</script-var>
 	</variables>
