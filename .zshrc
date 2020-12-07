@@ -96,7 +96,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # Example aliases
 
-alias zshrc="nvim ~/.zshrc"
+alias zshrc="nvim ~/.config/.zshrc"
 alias yabairc="nvim ~/.config/yabai/yabairc"
 alias skhdrc="nvim ~/.config/skhd/skhdrc"
 export HOMEBREW_NO_AUTO_UPDATE=1
