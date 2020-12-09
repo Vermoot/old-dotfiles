@@ -21,6 +21,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'psliwka/vim-smoothie'
 Plug 'unblevable/quick-scope'
 Plug 'ap/vim-css-color'
+Plug 'glacambre/firenvim'
 call plug#end()
 " }}}
 
