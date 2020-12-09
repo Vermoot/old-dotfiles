@@ -1,3 +1,5 @@
+// General {{{
+
 window {
 	background-color: transparent;
 }
@@ -12,7 +14,11 @@ window {
 	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
 }
 
-.space, .visible-space {
+// }}}
+
+// Spaces {{{
+
+.space, .visible-space{
 	all: unset;
 	background-color: #dddddd;
 	border-radius: 3px;
@@ -29,16 +35,24 @@ window {
 
 .space:active {
 	background-color: #bbbbbb;
-	margin: 4px;
+	margin: 4px 4px 3px;
 	padding: 0 7px 0;
 	font-size: 11px;
 }
+
+// }}}
+
+// Active window {{{
 
 .active-window {
 
 }
 
-.clock, .download, .test {
+// }}}
+
+// Data {{{
+
+.clock, .download, .test-box {
 	margin-right: 7px;
 	background-color: #dddddd;
 	margin: 3px;
@@ -49,7 +63,4 @@ window {
 
 }
 
-.spaces {
-	all: unset;
-	border-color: transparent;
-}
+// }}}
