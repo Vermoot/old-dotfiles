@@ -6,9 +6,11 @@
 			<literal content="{{spaces}}"/>
 		</def>
 		<def name="current_window">
-			<label class="active-window" text="{{active_window}}"/>
+			<box class="active-window">
+				<label class="active-window-label" text="{{active_window}}"/>
+			</box>
 		</def>
-		<def name="test"> <label class="test" text="{{test}}"/> </def>
+		<def name="test"><box class="test-box"><label text="{{test}}"/></box></def>
 		<def name="download">
 			<label class="download" text="↓ {{download_speed}}"/>
 		</def>
@@ -28,7 +30,6 @@
 				<box hexpand="true" halign="end">
 					<box space-evenly="false">
 						<test/>
-						<download/>
 						<clock/>
 					</box>
 				</box>
