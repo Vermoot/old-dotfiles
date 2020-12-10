@@ -22,6 +22,12 @@ Plug 'psliwka/vim-smoothie'
 Plug 'unblevable/quick-scope'
 Plug 'ap/vim-css-color'
 Plug 'glacambre/firenvim'
+Plug 'tpope/vim-surround'
+Plug 'wellle/targets.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'justinmk/vim-sneak'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 " }}}
 
