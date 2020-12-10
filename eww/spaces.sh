@@ -6,7 +6,7 @@ do
 	index="$(echo $space | jq .index)"
 	if [ $(echo $space | jq .visible) = 1 ]
 	then
-		output+="<label class='visible-space' text='$index'/>"
+		output+="<label class='space visible-space' text='$index'/>"
 	else
 		output+="<button class='space' onclick='yabai -m space --focus $index'>$index</button>"
 	fi
