@@ -48,8 +48,8 @@ allow-cmd true
 ;; --------------- Button Definitions ------------------------ {{{
 
 ;; -- Mod-tap --
-(defalias tab (tap-next tab C-A-S))   ;; Tab as Tab/Meh
-(defalias esc (tap-next esc fn))      ;; Esc as Esc/fn
+(defalias tab (tap-hold 200 tab C-A-S))   ;; Tab as Tab/Meh
+(defalias esc (tap-hold 200 esc fn))      ;; Esc as Esc/fn
 
 ;; -- Home row mods --
 (defalias asf (tap-hold 200 a lsft))  ;; Shift on A
