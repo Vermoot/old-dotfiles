@@ -65,6 +65,7 @@ allow-cmd true
 (defalias À (tap-macro A-grv S-a))
 (defalias ù (tap-macro A-grv u))
 (defalias ç A-c)
+(defalias Ç A-S-c)
 (defalias ^ A-i)
 (defalias grv A-grv)
 
@@ -117,7 +118,7 @@ allow-cmd true
 						 _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    @À   _    @É   _    _    _    _    _    _    _    _    _    _
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-				_    _    _    _    _    _    _    _    _    _    _    _    _
+				_    _    _    _    @Ç   _    _    _    _    _    _    _    _
 				_    _    _    _              _         _    _    _    _    _    _
 )
 ;; ---------------- }}}
