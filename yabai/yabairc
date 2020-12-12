@@ -14,9 +14,9 @@ config window_opacity_duration      2
 config active_window_opacity        1.0
 config normal_window_opacity        0.9
 config window_border                off
-config window_border_width          3
-config active_window_border_color   0xccffffff
-config normal_window_border_color   0xff555555
+config window_border_width          5
+config active_window_border_color   0xffffffff
+config normal_window_border_color   0x00555555
 config insert_feedback_color        0xffd75f5f
 config split_ratio                  0.50
 config auto_balance                 off
@@ -43,7 +43,7 @@ config window_gap                   06
 rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password|Messages|WebTorrent|Karabiner-Elements" manage=off
 rule title="Discord Updater|Software Update" manage=off
 rule title='^Ouverture' manage=off layer=above
-
+rule app='iTerm' border=on
 # }}}
 
 
