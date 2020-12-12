@@ -28,6 +28,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'justinmk/vim-sneak'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'alvan/vim-closetag'
 call plug#end()
 " }}}
 
