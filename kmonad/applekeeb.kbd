@@ -1,13 +1,15 @@
-#| -------------- Keeb Pattern ------------------------------ {{{
+#| --------------- Keeb Pattern ------------------------------ {{{
 
 (deflayer 
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-						 _    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _    _
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _
 				_    _    _    _              _         _    _    _    _    _    _
 )
+
+;; ISO Apple keyboard but the paragraph key (left of 1) is omitted because it makes kmonad crash anyway (see #106)
 
 ------------------------------------------------------------- }}} |#
 
@@ -17,7 +19,7 @@
 ;; --------------- defcfg ------------------------------------ {{{{{{}}}
 
 (defcfg
-input (iokit-name "Apple Internal Keyboard / Trackpad")
+input (iokit-name "Apple Internal Keyboard / Trackpad")  ;; Macbook keyboard
 output (kext)
 
 fallthrough true
@@ -33,7 +35,7 @@ allow-cmd true
 
 (defsrc
 				esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-						 1    2    3    4    5    6    7    8    9    0    -    =    bspc
+				     1    2    3    4    5    6    7    8    9    0    -    =    bspc
 				tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret
 				caps a    s    d    f    g    h    j    k    l    ;    '    \    
 				lsft grv  z    x    c    v    b    n    m    ,    .    /    rsft
@@ -52,8 +54,8 @@ allow-cmd true
 (defalias esc (tap-hold 200 esc fn))      ;; Esc as Esc/fn
 
 ;; -- Home row mods --
-(defalias asf (tap-hold 200 a lsft))  ;; Shift on A
-(defalias ;sf (tap-hold 200 ; rsft))  ;; Shift on ;
+(defalias asf (tap-hold 150 a lsft))      ;; Shift on A
+(defalias ;sf (tap-hold 150 ; rsft))      ;; Shift on ;
 
 ;; -- Accents --
 (defalias é (tap-macro A-e e))
@@ -66,10 +68,10 @@ allow-cmd true
 (defalias ù (tap-macro A-grv u))
 (defalias ç A-c)
 (defalias Ç A-S-c)
-(defalias ^ A-i)
-(defalias grv A-grv)
+(defalias ^ A-i)              				    ;; Dead key
+(defalias grv A-grv)              				;; Dead key
 
-;; ----------------------------------------------------------- }}}
+;; ---------------------------------------------------------- }}}
 
 
 
@@ -99,10 +101,10 @@ allow-cmd true
 
 
 ;; ---- Raise ----- {{{
-(defalias rs (tap-hold 150 m (layer-toggle raise)))
-(deflayer raise
+	(defalias rs (tap-hold 150 m (layer-toggle raise)))
+	(deflayer raise
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-						 _    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				caps @à   _    @é   _    _    _    @ù   @^   \_   +    _    _    _
 				_    @!   @    #    $    %    ^    &    *    \(   @sep |    _    
 				@Srs _    `    _    @ç   _    _    _    _    {    }    _    @Srs
@@ -115,7 +117,7 @@ allow-cmd true
 (defalias ! (tap-hold 150 ! (layer-toggle shift-raise)))
 (deflayer shift-raise
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-						 _    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    @À   _    @É   _    _    _    _    _    _    _    _    _    _
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    @Ç   _    _    _    _    _    _    _    _
@@ -128,7 +130,7 @@ allow-cmd true
 (defalias lw (tap-hold 150 c (layer-toggle lower)))
 (deflayer lower
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-						 _    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    @è   _    _    _    @ù   @ê   -    =    _    _    _
 				_    @1   2    3    4    5    6    7    8    9    @0   \\   _    
 				@Slw _    ~    _    _    _    _    _    _    [    ]    _    @Slw
@@ -141,7 +143,7 @@ allow-cmd true
 (defalias 0 (tap-hold 150 0 (layer-toggle shift-lower)))
 (deflayer shift-lower
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-						 _    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    _    _    _    _    @Ê   _    _    _    _    _
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _
@@ -151,10 +153,10 @@ allow-cmd true
 
 
 ;; ---- Space ----- {{{
-(defalias spc (tap-hold 200 spc (layer-toggle space)))
+(defalias spc (tap-hold 150 spc (layer-toggle space)))
 (deflayer space 
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-						 _    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _    _
 				_    _    _    _    _    _    left down up   rght _    _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _
