@@ -1,4 +1,4 @@
-#| --------------------------------------------------------------------------
+| --------------------------------------------------------------------------
 
                               KMonad: Guided tour
 
@@ -694,18 +694,18 @@
   but it comes with an additional timeout that, just like `tap-hold-next` will
   jump into holding-mode after a timeout.
 
-  I honestly think that `tap-hold-next-release`, although it seems the most
+ honestly think that `tap-hold-next-release`, although it seems the most
   complicated, probably is the most comfortable to use. But I've put all of them
   in a testing layer down below, so give them a go and see what is nice.
 
-  -------------------------------------------------------------------------- |#
+----------------------------------------------------------- |#
 
 
-(defalias
+
   xtn (tap-next x lsft)         ;; Shift that does 'x' on tap
   xth (tap-hold 400 x lsft)     ;; Long delay for easier testing
-  thn (tap-hold-next 400 x lsft)
-  tnr (tap-next-release x lsft)
+  thn (ap-hold-next 400 x lsft)
+  tnr (release x lsft)
   tnh (tap-hold-next-release 2000 x lsft)
 
   ;; Used it the colemak layer
@@ -730,7 +730,7 @@
 
   A `multi-tap` codes for different buttons depending on how often it is tapped.
   It is defined by a series of delays and buttons, followed by a last button
-  without delay. As long as you tap the `multi-tap` within the delay specified,
+  without delay. As ng as you tap the `multi-tap` within the delay specified,
   it will jump to the next button. Once the delay is exceeded the selected
   button is pressed. If the last button in the list is reached, it is
   immediately pressed.

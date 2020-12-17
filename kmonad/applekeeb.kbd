@@ -50,12 +50,18 @@ allow-cmd true
 ;; --------------- Button Definitions ------------------------ {{{
 
 ;; -- Mod-tap --
-(defalias tab (tap-hold 200 tab C-A-S))   ;; Tab as Tab/Meh
-(defalias esc (tap-hold 200 esc fn))      ;; Esc as Esc/fn
+(defalias tab (tap-hold-next-release 500 tab C-A-sft))   ;; Tab as Tab/Meh
+(defalias esc (tap-hold-next-release 500 esc fn))      ;; Esc as Esc/fn
 
 ;; -- Home row mods --
-(defalias asf (tap-hold 150 a lsft))      ;; Shift on A
-(defalias ;sf (tap-hold 150 ; rsft))      ;; Shift on ;
+(defalias asf (tap-hold-next-release 150 a lsft))      ;; Shift on A
+(defalias ;sf (tap-hold-next-release 150 ; rsft))      ;; Shift on ;
+(defalias sctl (tap-hold-next-release 500 s lctl))      ;; Ctrl on S
+(defalias Lctl (tap-hold-next-release 500 l rctl))      ;; Ctrl on L
+(defalias dalt (tap-hold-next-release 500 d lalt))      ;; Alt on D
+(defalias kalt (tap-hold-next-release 500 k ralt))      ;; Alt on K
+(defalias fcmd (tap-hold-next-release 500 f lmet))      ;; Cmd on F
+(defalias jcmd (tap-hold-next-release 500 j rmet))      ;; Cmd on J
 
 ;; -- Accents --
 (defalias é (tap-macro A-e e))
@@ -101,20 +107,20 @@ allow-cmd true
 
 
 ;; ---- Raise ----- {{{
-	(defalias rs (tap-hold 150 m (layer-toggle raise)))
+	(defalias rs (tap-hold-next-release 500 m (layer-toggle raise)))
 	(deflayer raise
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				caps @à   _    @é   _    _    _    @ù   @^   \_   +    _    _    _
 				_    @!   @    #    $    %    ^    &    *    \(   @sep |    _    
 				@Srs _    `    _    @ç   _    _    _    _    {    }    _    @Srs
-				_    _    _    _              _         bspc _    _    _    _    _
+				_    _    _    _              _         _    _    _    _    _    _
 )
 
 ;; Shifted
 (defalias Srs (layer-toggle shift-raise))
-(defalias sep (tap-hold 150 \) (layer-toggle shift-raise)))
-(defalias ! (tap-hold 150 ! (layer-toggle shift-raise)))
+(defalias sep (tap-hold-next-release 500 \) (layer-toggle shift-raise)))
+(defalias ! (tap-hold-next-release 500 ! (layer-toggle shift-raise)))
 (deflayer shift-raise
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
@@ -127,20 +133,20 @@ allow-cmd true
 
 
 ;; ---- Lower ----- {{{
-(defalias lw (tap-hold 150 c (layer-toggle lower)))
+(defalias lw (tap-hold-next-release 500 c (layer-toggle lower)))
 (deflayer lower
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    @è   _    _    _    @ù   @ê   -    =    _    _    _
 				_    @1   2    3    4    5    6    7    8    9    @0   \\   _    
 				@Slw _    ~    _    _    _    _    _    _    [    ]    _    @Slw
-				_    _    _    _              _         del  _    _    _    _    _
+				_    _    _    _              _         _    _    _    _    _    _
 )
 
 ;; Shifted
 (defalias Slw (layer-toggle shift-lower))
-(defalias 1 (tap-hold 150 1 (layer-toggle shift-lower)))
-(defalias 0 (tap-hold 150 0 (layer-toggle shift-lower)))
+(defalias 1 (tap-hold-next-release 500 1 (layer-toggle shift-lower)))
+(defalias 0 (tap-hold-next-release 500 0 (layer-toggle shift-lower)))
 (deflayer shift-lower
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
@@ -153,14 +159,14 @@ allow-cmd true
 
 
 ;; ---- Space ----- {{{
-(defalias spc (tap-hold 150 spc (layer-toggle space)))
+(defalias spc (tap-hold-next-release 500 spc (layer-toggle space)))
 (deflayer space 
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _    _
-				_    _    _    _    _    _    left down up   rght _    _    _    
+				_    _    _    lalt lmet _    left down up   rght _    _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _
-				_    _    _    _              _         _    _    _    _    _    _
+				_    _    _    _              _         del  _    _    _    _    _
 )
 ;; ---------------- }}}
 
