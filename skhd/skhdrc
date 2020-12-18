@@ -5,30 +5,30 @@
 # Manipulate spaces {{{
 
 # Switch spaces
-fn - l :		yabai -m space --focus next || \
-			yabai -m space --focus first
+fn - l :            yabai -m space --focus next || \
+                    yabai -m space --focus first
 
-fn - h :		yabai -m space --focus prev || \
-			yabai -m space --focus last
+fn - h :            yabai -m space --focus prev || \
+                    yabai -m space --focus last
 
-ctrl - right :		mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
-			yabai -m display --focus $mouse_display && \
-			yabai -m space --focus "$(yabai -m query --spaces --display \
-			| jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
+ctrl - right :      mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
+                    yabai -m display --focus $mouse_display && \
+			              yabai -m space --focus "$(yabai -m query --spaces --display \
+			              | jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
 
-ctrl - left:		mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
-			yabai -m display --focus $mouse_display && \
-			yabai -m space --focus "$(yabai -m query --spaces --display \
-			| jq 'nth(index(map(select(.focused == 1))) - 1).index')" 
+ctrl - left:        mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
+			              yabai -m display --focus $mouse_display && \
+			              yabai -m space --focus "$(yabai -m query --spaces --display \
+			              | jq 'nth(index(map(select(.focused == 1))) - 1).index')"
 
 # Create space
-fn - t :        yabai -m space --create && \
-                      yabai -m space --focus last
+fn - t :            yabai -m space --create && \
+                    yabai -m space --focus last
 
 # Delete space
-fn - w :        destroy=$(yabai -m query --spaces --space | jq .index) && \
-		(yabai -m space --focus next || yabai -m space --focus prev) && \
-		yabai -m space $destroy --destroy
+fn - w :            destroy=$(yabai -m query --spaces --space | jq .index) && \
+		                (yabai -m space --focus next || yabai -m space --focus prev) && \
+		                yabai -m space $destroy --destroy
 
 # }}}
 
@@ -39,56 +39,56 @@ fn - w :        destroy=$(yabai -m query --spaces --space | jq .index) && \
 # Manipulate windows {{{
 
 # make active window floating
-fn - f :              yabai -m window --toggle float && \
-                      yabai -m window --move abs:100:100 && \
-                      yabai -m window --resize abs:1200:600
+fn - f :            yabai -m window --toggle float && \
+                    yabai -m window --move abs:100:100 && \
+                    yabai -m window --resize abs:1200:600
 
 # switch focus to next window
 fn - k :            yabai -m window --focus next || \
-                      yabai -m window --focus first
+                    yabai -m window --focus first
 
-fn - j :    yabai -m window --focus prev || \
-                      yabai -m window --focus last
+fn - j :            yabai -m window --focus prev || \
+                    yabai -m window --focus last
 
 # Switch focus NSWE
-fn + cmd - h :	      yabai -m window --focus west
-fn + cmd - j :	      yabai -m window --focus south 
-fn + cmd - k :	      yabai -m window --focus north
-fn + cmd - l :	      yabai -m window --focus east
+fn + cmd - h :	    yabai -m window --focus west
+fn + cmd - j :	    yabai -m window --focus south
+fn + cmd - k :	    yabai -m window --focus north
+fn + cmd - l :	    yabai -m window --focus east
 
 # Resize window to full screen
-fn - x :        yabai -m window --toggle zoom-fullscreen
+fn - x :            yabai -m window --toggle zoom-fullscreen
 
 
 
 # Swap next
-fn + alt - w :        yabai -m window --swap next || \
-                      yabai -m window --swap first
+fn + alt - w :      yabai -m window --swap next || \
+                    yabai -m window --swap first
 
 # Swap NSWE
-fn + alt - k :        yabai -m window --swap north
-fn + alt - j :        yabai -m window --swap south
-fn + alt - h :        yabai -m window --swap west
-fn + alt - l :        yabai -m window --swap east
+fn + alt - k :      yabai -m window --swap north
+fn + alt - j :      yabai -m window --swap south
+fn + alt - h :      yabai -m window --swap west
+fn + alt - l :      yabai -m window --swap east
 
 # Move window left/right a space
-fn - a :             (yabai -m window --space prev && \
-                      yabai -m space --focus prev) || \
-                     (yabai -m window --space last && \
-                      yabai -m space --focus last)
+fn - a :            (yabai -m window --space prev && \
+                     yabai -m space --focus prev) || \
+                    (yabai -m window --space last && \
+                     yabai -m space --focus last)
 
-fn - s :             (yabai -m window --space next && \
-                      yabai -m space --focus next) || \
-                     (yabai -m window --space first && \
-                      yabai -m space --focus first)
+fn - s :            (yabai -m window --space next && \
+                     yabai -m space --focus next) || \
+                    (yabai -m window --space first && \
+                     yabai -m space --focus first)
 
 # Create new space and send active window
-fn + cmd - t :		yabai -m space --create && \
-			yabai -m window --space last && \
-			yabai -m space --focus last
+fn + cmd - t :		  yabai -m space --create && \
+			              yabai -m window --space last && \
+			              yabai -m space --focus last
 
 # Show Desktop
-fn - d :              yabai -m space --toggle show-desktop
+fn - d :            yabai -m space --toggle show-desktop
 
 # }}}
 
@@ -99,24 +99,24 @@ fn - d :              yabai -m space --toggle show-desktop
 # Shortcuts {{{
 
 # Spotify
-fn + cmd - s :		app="Spotify" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+fn + cmd - s :	    app="Spotify" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 # Discord
-fn + cmd - d :		app="Discord" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+fn + cmd - d :		  app="Discord" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 # Firefox
-fn + cmd - f :		app="Firefox" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+fn + cmd - f :		  app="Firefox" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 # Messages
-fn + cmd - m :		app="Messages" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+fn + cmd - m :		  app="Messages" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 # iTerm
-fn + cmd - i :		app="iTerm" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
+fn + cmd - i :		  app="iTerm" && yabai -m window --focus $(yabai -m query --windows | jq '.[] | select(.app==$app) | .id') || open -a $app
 
 
 
 # Previous window
-fn + cmd - q :	      yabai -m window --focus recent
+fn + cmd - q :	    yabai -m window --focus recent
 
 # }}}
 
@@ -125,27 +125,28 @@ fn + cmd - q :	      yabai -m window --focus recent
 ################
 # App-specific {{{
 
+# Firefox
 # Up/Down navigation
 meh - j [
-    "Discord" : skhd -k "alt - down"
-    "Messages" : skhd -k "ctrl - tab"
+                    "Discord" :     skhd -k "alt - down"
+                    "Messages" :    skhd -k "ctrl - tab"
 ]
 
 meh - k [
-    "Discord" : skhd -k "alt - up"
-    "Messages" : skhd -k "ctrl + shift - tab"
+                    "Discord" :     skhd -k "alt - up"
+                    "Messages" :    skhd -k "ctrl + shift - tab"
 ]
 
 meh - h [
-    "Discord" : skhd -k "cmd + alt - down"
+                    "Firefox" :     skhd -k "ctrl + shift - tab"    # Previous tab
+                    "Discord" :     skhd -k "cmd + alt - down"
 ]
 
 meh - l [
-    "Discord" : skhd -k "cmd + alt - up"
+                    "Discord" :     skhd -k "cmd + alt - up"
+                    "Firefox" :     skhd -k "ctrl - tab"            # Next tab
 ]
 
-hyper - j : skhd -k "pagedown"
-hyper - k : skhd -k "pageup"
+hyper - j :         skhd -k "pagedown"
+hyper - k :         skhd -k "pageup"
 # }}}
-
-cmd - tab :
