@@ -99,5 +99,6 @@ source $ZSH/oh-my-zsh.sh
 alias zshrc="nvim ~/.config/.zshrc"
 alias yabairc="nvim ~/.config/yabai/yabairc"
 alias skhdrc="nvim ~/.config/skhd/skhdrc"
+alias nvimrc="nvim ~/.config/nvim/init.vim"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
