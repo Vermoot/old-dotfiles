@@ -43,6 +43,9 @@ fn - f :            yabai -m window --toggle float && \
                     yabai -m window --move abs:100:100 && \
                     yabai -m window --resize abs:1200:600
 
+# make active window always on top
+fn - u :            yabai -m window --toggle topmost
+
 # switch focus to next window
 fn - k :            yabai -m window --focus next || \
                     yabai -m window --focus first
