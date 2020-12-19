@@ -41,7 +41,7 @@ call plug#end()
 " }}}
 
 set background=dark
-colorscheme palenight
+colorscheme gruvbox
 " let g:gruvbox_contrast_dark
 let g:airline_powerline_fonts = 1
 let g:airline_theme='deus'
