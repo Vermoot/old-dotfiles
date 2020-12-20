@@ -3,7 +3,9 @@
 
 
 		<def name="spaces">
-			<literal content="{{spaces}}"/>
+			<box hexpand="true">
+				<literal content="{{spaces}}"/>
+			</box>
 		</def>
 		<def name="current_window">
 			<box class="active-window">
@@ -22,14 +24,13 @@
 		<def name="main">
 			<box class="bar" orientation="h" space-evenly="true">
 				<box hexpand="true" halign="start">
-					<spaces/>
+						<spaces/>
 				</box>
 				<box hexpand="true" halign="center">
 					<current_window active_window="{{yabai_active}}"/>
 				</box>
 				<box hexpand="true" halign="end">
 					<box space-evenly="false">
-						<test/>
 						<clock/>
 					</box>
 				</box>

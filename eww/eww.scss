@@ -1,3 +1,9 @@
+// Colorscheme {{{
+
+// $bar-background: white;
+
+// }}}
+
 // General {{{
 
 window {
@@ -7,34 +13,44 @@ window {
 .bar {
 	font: 12px JetBrainsMono Nerd Font;
 	font-size: 12px;
-	color: black;
-	background-color: white;
+	color: #ebdbb2;
+	background-color: #282828;
 	margin: 8px;
-	border-radius: 5px;
-	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
+	border-radius: 0px;
+	border: 2px solid #665c54;
+	// box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
 }
 
+.cell {
+	all: unset;
+	background-color: #3c3836;
+	border-radius: 1px;
+	font-size: 12px;
+	padding: 0 8px 0;
+	// box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+	// border: 1px solid rgba(0, 0, 0, 0.3);
+}
 // }}}
 
 // Spaces {{{
 
+.spaces {
+	// background-color: red;
+}
+
 .space {
-	all: unset;
-	background-color: #dddddd;
-	border-radius: 3px;
-	margin: 3px;
-	font-size: 12px;
-	padding: 0 8px 0;
-	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-	border: 1px solid rgba(0, 0, 0, 0.0);
+	@extend .cell;
+	margin-right: 2px;
 }
 
 .visible-space {
-	background-color: #5FAFFF;
+	@extend .space;
+	color: #282828;
+	background-color: #d79921;
 }
 
 .space:active {
-	background-color: #bbbbbb;
+	background-color: #504945;
 	margin: 4px 4px 3px;
 	padding: 0 7px 0;
 	font-size: 11px;
@@ -46,21 +62,18 @@ window {
 
 .active-window {
 
+	// text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
 }
 
 // }}}
 
 // Data {{{
+.data-cell {
+	@extend .cell;
+}
 
 .clock, .download, .test-box {
-	margin-right: 7px;
-	background-color: #dddddd;
-	margin: 3px;
-	padding: 0 6px 0;
-	border-radius: 3px;
-	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-	border: 1px solid rgba(0, 0, 0, 0.0);
-
+	@extend .data-cell;
 }
 
 // }}}

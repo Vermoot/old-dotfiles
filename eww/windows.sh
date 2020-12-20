@@ -1,0 +1,1 @@
+declare -A icons=( ["Finder"] = "󰀶"
