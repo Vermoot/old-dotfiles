@@ -49,8 +49,13 @@ let g:airline_theme='deus'
 set termguicolors
 set foldmethod=marker
 set number
+set clipboard^=unnamed  " Sync clipboard and default register
 
 " Remaps {{{
+
+" dd doesn't cut but deletes. Use Vx to cut line
+nnoremap d "_d
+vnoremap d "_d
 
 " }}}
 
