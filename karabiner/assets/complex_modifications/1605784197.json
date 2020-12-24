@@ -1,1 +1,0 @@
-{"title":"fn + spacebar as backspace","rules":[{"description":"fn + spacebar as backspace","manipulators":[{"type":"basic","from":{"modifiers":{"mandatory":["fn"]},"key_code":"spacebar"},"to":[{"repeat":true,"key_code":"delete_or_backspace"}]}]}]}
