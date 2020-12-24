@@ -56,6 +56,8 @@ set clipboard^=unnamed  " Sync clipboard and default register
 " dd doesn't cut but deletes. Use Vx to cut line
 nnoremap d "_d
 vnoremap d "_d
+" x doesn't cut but deletes. Not in visual mode though.
+nnoremap x "_x
 
 " }}}
 
