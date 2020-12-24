@@ -1,3 +1,6 @@
+# This script is used in a <literal> tag in the bar, as the <space/> widget.
+# It's refreshed (re-ran) on every space change with a signal set in my yabai config.
+
 spaces_query=$(yabai -m query --spaces --display)
 windows=true
 output="<box class='spaces' vexpand='true' space-evenly='false'>"
