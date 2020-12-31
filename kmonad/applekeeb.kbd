@@ -51,7 +51,7 @@ allow-cmd true
 
 ;; -- Mod-tap --
 (defalias tab (tap-hold-next-release 500 tab C-A-sft))   ;; Tab as Tab/Meh
-(defalias esc (tap-hold-next-release 500 esc fn))      ;; Esc as Esc/fn
+(defalias esc (tap-hold-next-release 500 esc C-A-S-met))      ;; Esc as Esc/Hyper
 
 ;; -- Home row mods --
 (defalias asf (tap-hold-next-release 150 a lsft))      ;; Shift on A
@@ -63,19 +63,23 @@ allow-cmd true
 (defalias fcmd (tap-hold-next-release 500 f lmet))      ;; Cmd on F
 (defalias jcmd (tap-hold-next-release 500 j rmet))      ;; Cmd on J
 
+;; -- Undead characters --
+(defalias apo (tap-macro ' spc))
+(defalias grv (tap-macro grv spc))
+(defalias tld (tap-macro ~ spc))
+(defalias ^ (tap-macro A-i spc))
+
 ;; -- Accents --
-(defalias é (tap-macro A-e e))
-(defalias É (tap-macro A-e S-e))
-(defalias è (tap-macro A-grv e))
+(defalias é (tap-macro ' e))
+(defalias É (tap-macro ' S-e))
+(defalias è (tap-macro grv e))
 (defalias ê (tap-macro A-i e))
 (defalias Ê (tap-macro A-i S-e))
-(defalias à (tap-macro A-grv a))
-(defalias À (tap-macro A-grv S-a))
-(defalias ù (tap-macro A-grv u))
+(defalias à (tap-macro grv a))
+(defalias À (tap-macro grv S-a))
+(defalias ù (tap-macro grv u))
 (defalias ç A-c)
 (defalias Ç A-S-c)
-(defalias ^ A-i)              				    ;; Dead key
-(defalias grv A-grv)              				;; Dead key
 
 ;; ---------------------------------------------------------- }}}
 
@@ -89,8 +93,8 @@ allow-cmd true
 				_    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
 				     _    _    _    _    _    _    _    _    _    _    _    _    _
 				@tab _    _    _    _    _    _    _    _    _    _    _    _    _
-				@esc @asf _    _    _    _    _    _    _    _    @;sf _    _
-				_    _    _    _    @lw  _    _    _    @rs  _    _    _    _
+				@esc @asf _    _    _    _    _    _    _    _    @;sf @apo _
+				_    @grv _    _    @lw  _    _    _    @rs  _    _    _    _
 				@fn  _    _    _              @spc      bspc _    _    _    _    _
 )
 
@@ -111,9 +115,9 @@ allow-cmd true
 	(deflayer raise
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
-				caps @à   _    @é   _    _    _    @ù   @^   \_   +    _    _    _
-				_    @!   @    #    $    %    ^    &    *    \(   @sep |    _    
-				@Srs _    `    _    @ç   _    _    _    _    {    }    _    @Srs
+				caps @à   _    @é   _    _    _    @ù   ^   \_   +    _    _    _
+				_    @!   @    #    $    %    @^    &    *    \(   @sep |    _    
+				@Srs _    @grv    _    @ç   _    _    _    _    {    }    _    @Srs
 				_    _    _    _              _         _    _    _    _    _    _
 )
 
@@ -139,7 +143,7 @@ allow-cmd true
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    @è   _    _    _    @ù   @ê   -    =    _    _    _
 				_    @1   2    3    4    5    6    7    8    9    @0   \\   _    
-				@Slw _    ~    _    _    _    _    _    _    [    ]    _    @Slw
+				@Slw _    @tld _    _    _    _    _    _    [    ]    _    @Slw
 				_    _    _    _              _         _    _    _    _    _    _
 )
 
