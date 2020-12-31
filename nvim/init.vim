@@ -27,6 +27,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-repeat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'liuchengxu/vim-which-key'
 
 " Color Schemes
 Plug 'joshdick/onedark.vim'
@@ -52,6 +53,13 @@ set number
 set clipboard^=unnamed  " Sync clipboard and default register
 
 " Remaps {{{
+
+" Space Leader
+let mapleader=" "
+
+" Leader stuff
+nnoremap <Leader>w :w
+nnoremap <Leader>q :q
 
 " dd doesn't cut but deletes. Use Vx to cut line
 nnoremap d "_d
