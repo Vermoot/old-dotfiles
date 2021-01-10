@@ -24,6 +24,7 @@ output (kext)
 
 fallthrough true
 allow-cmd true
+;; tap-repeat 200
 )
 
 ;; ----------------------------------------------------------- }}}
@@ -90,7 +91,7 @@ allow-cmd true
 
 ;; ---- Default --- {{{
 (deflayer default
-				_    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
+				_    brdn brup lp   mctl bldn blup _    _    _    mute vold volu
 				     _    _    _    _    _    _    _    _    _    _    _    _    _
 				@tab _    _    _    _    _    _    _    _    _    _    _    _    _
 				@esc @asf _    _    _    _    _    _    _    _    @;sf @apo _
