@@ -94,7 +94,7 @@ allow-cmd true
 				     _    _    _    _    _    _    _    _    _    _    _    _    _
 				@tab _    _    _    _    _    _    _    _    _    _    _    _    _
 				@esc @asf _    _    _    _    _    _    _    _    @;sf @apo _
-				_    @grv _    _    @lw  _    _    _    @rs  _    _    _    _
+				_    @grv _    _    _    @lw  _    @rs  _    _    _    _    _
 				@fn  _    _    _              @spc      bspc _    _    _    _    _
 )
 
@@ -111,7 +111,7 @@ allow-cmd true
 
 
 ;; ---- Raise ----- {{{
-	(defalias rs (tap-hold-next-release 500 m (layer-toggle raise)))
+	(defalias rs (tap-hold-next-release 500 n (layer-toggle raise)))
 	(deflayer raise
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
@@ -137,7 +137,7 @@ allow-cmd true
 
 
 ;; ---- Lower ----- {{{
-(defalias lw (tap-hold-next-release 500 c (layer-toggle lower)))
+(defalias lw (tap-hold-next-release 500 v (layer-toggle lower)))
 (deflayer lower
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
