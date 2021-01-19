@@ -13,8 +13,9 @@ font:
 window:
   decorations: "none"
   padding:
-    x: 8
-    y: 8
+    x: 30
+    y: 30
+
 
 # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
 # screens and make reading text a little easier.
@@ -56,3 +57,6 @@ colors:
     magenta: '#d3869b'
     cyan:    '#8ec07c'
     white:   '#ebdbb2'
+
+key_bindings:
+  - { key: N,        mods: Command, command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] } }
