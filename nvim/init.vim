@@ -58,8 +58,9 @@ set clipboard^=unnamed  " Sync clipboard and default register
 let mapleader=" "
 
 " Leader stuff
-nnoremap <Leader>w :w
-nnoremap <Leader>q :q
+nnoremap <Leader>w :w<cr>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>x :x<cr>
 
 " dd doesn't cut but deletes. Use Vx to cut line
 nnoremap d "_d
