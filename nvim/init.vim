@@ -52,7 +52,12 @@ set foldmethod=marker
 set number
 set clipboard^=unnamed  " Sync clipboard and default register
 
+
 " Remaps {{{
+
+" j and k go up/down wrapped lines
+map j gj
+map k gk
 
 " Space Leader
 let mapleader=" "
@@ -71,6 +76,9 @@ nnoremap x "_x
 " }}}
 
 " coc.nvim stuff {{{
+
+" Don't autocomplete in markdown, it's annoying.
+autocmd FileType markdown :call CocDisable()
 
 " TextEdit might fail if hidden is not set.
 set hidden
