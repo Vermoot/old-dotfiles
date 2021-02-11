@@ -15,12 +15,12 @@ config active_window_opacity        1.0
 config normal_window_opacity        0.9
 config window_border                on
 config window_border_width          3
-config active_window_border_color   0xffd79921
+config active_window_border_color   0xffd5c4a1
 config normal_window_border_color   0xff665c54
 config insert_feedback_color        0xffd75f5f
 config split_ratio                  0.50
 config auto_balance                 off
-config mouse_modifier               fn
+config mouse_modifier               ctrl
 config mouse_action1                move
 config mouse_action2                resize
 config mouse_drop_action            swap
@@ -52,7 +52,8 @@ rule app='IINA' border=off
 ###############
 # Home layout {{{
 
-if [ $(yabai -m query --displays | jq '. | length') = 2 ] ; then
+# if [ $(yabai -m query --displays | jq '. | length') = 2 ] ; then
+if false ; then
 	# Number of spaces on display 1
 	d1s=$(yabai -m query --spaces --display 1 | jq length)
 
@@ -90,11 +91,3 @@ yabai -m signal --add event=space_changed action='eww update spaces="$(~/.config
 yabai -m signal --add event=display_changed action='eww update yabai_active_space="$(yabai -m query --spaces --space | jq .index)"'
 
 # }}}
-
-
-# Border color active only on spaces with more than 1 window
-yabai -m signal --add event=space_changed action='if (($(yabai -m query --windows --space | jq 'length') > 1)); then
-yabai -m config active_window_border_color 0xffd79921
-else
-yabai -m config active_window_border_color 0xff665c54
-fi'
