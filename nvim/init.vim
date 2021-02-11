@@ -28,6 +28,7 @@ Plug 'alvan/vim-closetag'
 Plug 'tpope/vim-repeat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'liuchengxu/vim-which-key'
+Plug 'preservim/nerdcommenter'
 
 " Color Schemes
 Plug 'joshdick/onedark.vim'
@@ -51,7 +52,9 @@ set termguicolors
 set foldmethod=marker
 set number
 set clipboard^=unnamed  " Sync clipboard and default register
-
+set whichwrap+=<,>,h,l " Allow arrows and h/l to move to the previous/next line
+set wrap linebreak nolist " Don't wrap in the middle of a word
+set mouse=a
 
 " Remaps {{{
 
@@ -72,13 +75,12 @@ nnoremap d "_d
 vnoremap d "_d
 " x doesn't cut but deletes. Not in visual mode though.
 nnoremap x "_x
+" c doesn't cut but delets, fucking hell.
+nnoremap c "_c
 
 " }}}
 
 " coc.nvim stuff {{{
-
-" Don't autocomplete in markdown, it's annoying.
-autocmd FileType markdown :call CocDisable()
 
 " TextEdit might fail if hidden is not set.
 set hidden
