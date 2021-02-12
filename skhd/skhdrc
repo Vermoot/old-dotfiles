@@ -32,6 +32,17 @@ hyper - w :            destroy=$(yabai -m query --spaces --space | jq .index) &&
 
 hyper - o : 					yabai -m display --focus recent
 
+hyper - return : 		active_display=$(yabai -m query --displays --display | jq -r '.index') &&\
+								    activeloc=$(yabai -m query --spaces | jq -r '.[]| select (.visible == 1)| select (.focused == 1) | .index') &&\
+								    targetloc=$(yabai -m query --spaces | jq -r '.[]| select (.visible == 1)| select (.focused == 0) | .index') &&\
+										yabai -m space $activeloc --label active &&\
+										yabai -m space $targetloc --label target &&\
+								    yabai -m space --display recent &&\
+										yabai -m space --move $targetloc || : &&\
+										yabai -m space --focus target &&\
+										yabai -m space --display recent &&\
+										yabai -m space --move $activeloc || : &&\
+										yabai -m space --focus active
 # }}}
 
 
