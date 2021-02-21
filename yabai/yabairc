@@ -44,6 +44,7 @@ rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password|M
 rule title="Discord Updater|Software Update|Fullscreen Controls" manage=off border=off
 rule title='^Ouverture' manage=off layer=above
 rule app='IINA' border=off
+rule app='Messages' border=on
 # }}}
 
 
@@ -52,8 +53,7 @@ rule app='IINA' border=off
 ###############
 # Home layout {{{
 
-# if [ $(yabai -m query --displays | jq '. | length') = 2 ] ; then
-if false ; then
+if [ $(yabai -m query --displays | jq '. | length') = 2 ] ; then
 	# Number of spaces on display 1
 	d1s=$(yabai -m query --spaces --display 1 | jq length)
 
