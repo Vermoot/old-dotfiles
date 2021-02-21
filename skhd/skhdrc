@@ -32,8 +32,8 @@ hyper - w :            destroy=$(yabai -m query --spaces --space | jq .index) &&
 
 hyper - o : 					yabai -m display --focus recent
 
-hyper - return : 		active_display=$(yabai -m query --displays --display | jq -r '.index') &&\
-								    activeloc=$(yabai -m query --spaces | jq -r '.[]| select (.visible == 1)| select (.focused == 1) | .index') &&\
+# Swap spaces across displays
+hyper - return : 		activeloc=$(yabai -m query --spaces | jq -r '.[]| select (.visible == 1)| select (.focused == 1) | .index') &&\
 								    targetloc=$(yabai -m query --spaces | jq -r '.[]| select (.visible == 1)| select (.focused == 0) | .index') &&\
 										yabai -m space $activeloc --label active &&\
 										yabai -m space $targetloc --label target &&\
@@ -66,10 +66,10 @@ hyper - p : 					  yabai -m window --toggle float && \
 												yabai -m window --toggle sticky
 
 # switch focus to next window
-hyper - k :            yabai -m window --focus next || \
+hyper - j :            yabai -m window --focus next || \
                     yabai -m window --focus first
 
-hyper - j :            yabai -m window --focus prev || \
+hyper - k :            yabai -m window --focus prev || \
                     yabai -m window --focus last
 
 # Switch focus NSWE
