@@ -56,6 +56,10 @@ set whichwrap+=<,>,h,l " Allow arrows and h/l to move to the previous/next line
 set wrap linebreak nolist " Don't wrap in the middle of a word
 set mouse=a
 
+" Nerdcommenter stuff
+let NERDSpaceDelims=1 " Add spaces with comments
+
+
 " Remaps {{{
 
 " j and k go up/down wrapped lines
