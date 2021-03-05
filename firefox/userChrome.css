@@ -1,5 +1,23 @@
 @import url("https://raw.githubusercontent.com/Rougemoot/gruvbox-contrib/master/css/gruvbox-dark.css");
 
+/* Background color */
+@-moz-document url(chrome://browser/content/browser.xhtml)
+{
+
+  #main-window,
+  browser[type="content-primary"],
+  browser[type="content"],
+  tabbrowser#content,
+  #content,
+  browser[type="content"] > html,
+  #tabbrowser-tabpanels,
+  .browserContainer
+  {
+     background: #282828 !important;
+  }
+
+}
+
 /* Gruvbox colors yo {{{*/
 :root {
 /* Dark Background */
@@ -205,20 +223,28 @@ transition: .2s ease .8s;
 }
 
 #navigator-toolbox {
+  width: 30% !important;
+  left: calc(35% + var(--sidebar-min-width)) !important;
   position: fixed !important;
   display: block;
-  transition: transform 82ms linear, opacity 82ms linear !important;
+  transition: left 0ms linear 882ms,
+              width 0ms linear 882ms,
+              transform 82ms linear,
+              opacity 82ms linear !important;
   transition-delay: var(--uc-autohide-toolbox-delay) !important;
   transform: translate(0, var(--uc-toolbox-translation));
   opacity: 0;
   line-height: 0;
   z-index: 2;
   pointer-events: all;
+  margin: 10px 10px 0;
 }
 
 #mainPopupSet:hover ~ box > toolbox,
 #navigator-toolbox:hover,
 #navigator-toolbox:focus-within{
+  width: calc(100% - var(--sidebar-min-width) - 20px) !important;
+  left: var(--sidebar-min-width) !important;
   transition-delay: 0ms !important;
   transform: translate(0px, 0px);
   opacity: 1;
