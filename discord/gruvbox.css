@@ -13,7 +13,7 @@
 
 /* Video call buttons background */
 .controlButton-2MhVEL {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 /* change keyboard focus color */
