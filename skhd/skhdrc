@@ -150,22 +150,22 @@ hyper + cmd - q :	    yabai -m window --focus recent
 # Up/Down navigation
 meh - j [
                     "Firefox" :     skhd -k "ctrl - tab"            # Next tab
-                    "Discord" :     skhd -k "alt - down"
+                    "Discord" :     skhd -k "alt - down"            # Down one channel
                     "Messages" :    skhd -k "ctrl - tab"
 ]
 
 meh - k [
                     "Firefox" :     skhd -k "ctrl + shift - tab"    # Previous tab
-                    "Discord" :     skhd -k "alt - up"
+                    "Discord" :     skhd -k "alt - up"              # Up one channel
                     "Messages" :    skhd -k "ctrl + shift - tab"
 ]
 
 meh - h [
-                    "Discord" :     skhd -k "cmd + alt - down"
+                    "Discord" :     skhd -k "cmd + alt - down"      # Down one server
 ]
 
 meh - l [
-                    "Discord" :     skhd -k "cmd + alt - up"
+                    "Discord" :     skhd -k "cmd + alt - up"        # Up one server
 ]
 
 # }}}
