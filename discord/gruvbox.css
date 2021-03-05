@@ -11,6 +11,11 @@
     font-family: SF Compact Rounded !important;
 }
 
+/* Video call buttons background */
+.controlButton-2MhVEL {
+    background-color: transparent;
+}
+
 /* change keyboard focus color */
 .theme-dark {
     --focus-primary: var(--text-normal); 
