@@ -29,6 +29,8 @@ Plug 'tpope/vim-repeat'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'liuchengxu/vim-which-key'
 Plug 'preservim/nerdcommenter'
+Plug 'iamcco/markdown-preview.nvim'
+Plug 'tridactyl/vim-tridactyl'
 
 " Color Schemes
 Plug 'joshdick/onedark.vim'
