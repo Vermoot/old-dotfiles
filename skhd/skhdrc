@@ -5,19 +5,17 @@
 # Manipulate spaces {{{
 
 # Switch spaces
-hyper - l :      		yabai -m space --focus "$(yabai -m query --spaces --display \
+hyper - i :      		yabai -m space --focus "$(yabai -m query --spaces --display \
 			              | jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
 
-hyper - h :         yabai -m space --focus "$(yabai -m query --spaces --display \
+hyper - m :         yabai -m space --focus "$(yabai -m query --spaces --display \
 			              | jq 'nth(index(map(select(.focused == 1))) - 1).index')"
 
-ctrl - right :      mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
-                    yabai -m display --focus $mouse_display && \
+ctrl - right :      yabai -m display --focus mouse && \
 			              yabai -m space --focus "$(yabai -m query --spaces --display \
 			              | jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
 
-ctrl - left:        mouse_display=$(yabai -m query --displays --display mouse | jq .index) && \
-			              yabai -m display --focus $mouse_display && \
+ctrl - left:        yabai -m display --focus mouse && \
 			              yabai -m space --focus "$(yabai -m query --spaces --display \
 			              | jq 'nth(index(map(select(.focused == 1))) - 1).index')"
 
@@ -30,7 +28,7 @@ hyper - w :            destroy=$(yabai -m query --spaces --space | jq .index) &&
 		                (yabai -m space --focus next || yabai -m space --focus prev) && \
 		                yabai -m space $destroy --destroy
 
-hyper - o : 					yabai -m display --focus recent
+hyper - y : 					yabai -m display --focus recent
 
 # Swap spaces across displays
 hyper - return : 		activeloc=$(yabai -m query --spaces | jq -r '.[]| select (.visible == 1)| select (.focused == 1) | .index') &&\
@@ -66,10 +64,10 @@ hyper - p : 					  yabai -m window --toggle float && \
 												yabai -m window --toggle sticky
 
 # switch focus to next window
-hyper - j :            yabai -m window --focus next || \
+hyper - n :            yabai -m window --focus next || \
                     yabai -m window --focus first
 
-hyper - k :            yabai -m window --focus prev || \
+hyper - e :            yabai -m window --focus prev || \
                     yabai -m window --focus last
 
 # Switch focus NSWE
@@ -148,24 +146,29 @@ hyper + cmd - q :	    yabai -m window --focus recent
 # App-specific {{{
 
 # Up/Down navigation
-meh - j [
+meh - n [
                     "Firefox" :     skhd -k "ctrl - tab"            # Next tab
                     "Discord" :     skhd -k "alt - down"            # Down one channel
                     "Messages" :    skhd -k "ctrl - tab"
 ]
 
-meh - k [
+meh - e [
                     "Firefox" :     skhd -k "ctrl + shift - tab"    # Previous tab
                     "Discord" :     skhd -k "alt - up"              # Up one channel
                     "Messages" :    skhd -k "ctrl + shift - tab"
 ]
 
-meh - h [
+meh - m [
                     "Discord" :     skhd -k "cmd + alt - down"      # Down one server
 ]
 
-meh - l [
+meh - i [
                     "Discord" :     skhd -k "cmd + alt - up"        # Up one server
+]
+
+# Sorted
+cmd - return [
+										"Sorted" : 			skhd -k "cmd - s"
 ]
 
 # }}}
