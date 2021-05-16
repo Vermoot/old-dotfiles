@@ -54,14 +54,14 @@ allow-cmd true
 (defalias esc (tap-hold-next-release 500 esc C-A-S-met))      ;; Esc as Esc/Hyper
 
 ;; -- Home row mods --
-(defalias asf (tap-hold-next-release 150 a lsft))      ;; Shift on A
-(defalias ;sf (tap-hold-next-release 150 ; rsft))      ;; Shift on ;
-(defalias sctl (tap-hold-next-release 500 s lctl))      ;; Ctrl on S
-(defalias Lctl (tap-hold-next-release 500 l rctl))      ;; Ctrl on L
-(defalias dalt (tap-hold-next-release 500 d lalt))      ;; Alt on D
-(defalias kalt (tap-hold-next-release 500 k ralt))      ;; Alt on K
-(defalias fcmd (tap-hold-next-release 500 f lmet))      ;; Cmd on F
-(defalias jcmd (tap-hold-next-release 500 j rmet))      ;; Cmd on J
+(defalias asf (tap-hold-next-release 200 a lsft))      ;; Shift on A
+(defalias osf (tap-hold-next-release 200 o rsft))      ;; Shift on O
+(defalias rct (tap-hold-next-release 300 r lctl))      ;; Ctrl on R
+(defalias ict (tap-hold-next-release 300 i rctl))      ;; Ctrl on L
+(defalias sal (tap-hold-next-release 300 s lalt))      ;; Alt on S
+(defalias eal (tap-hold-next-release 300 e ralt))      ;; Alt on E
+(defalias tcd (tap-hold-next-release 300 t lmet))      ;; Cmd on T
+(defalias ncd (tap-hold-next-release 300 n rmet))      ;; Cmd on N
 
 ;; -- Undead characters --
 (defalias apo (tap-macro ' spc))
@@ -81,6 +81,9 @@ allow-cmd true
 (defalias ç A-c)
 (defalias Ç A-S-c)
 
+;; -- Misc --
+(defalias sla (tap-hold-next-release 200 / rsft))
+
 ;; ---------------------------------------------------------- }}}
 
 
@@ -92,9 +95,9 @@ allow-cmd true
 (deflayer default
 				_    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
 				     _    _    _    _    _    _    _    _    _    _    _    _    _
-				@tab _    _    _    _    _    _    _    _    _    _    _    _    _
-				@esc @asf _    _    _    _    _    _    _    _    @;sf @apo _
-				_    @grv _    _    _    @lw  _    @rs  _    _    _    _    _
+				@tab q    w    f    p    b    /    j    l    u    y    ;    \    _
+				@esc @asf @rct @sal @tcd g    grv  m    @ncd @eal @ict @osf '
+				_    z    x    c    d    v    @lw  @rs  k    h    ,    .    @sla
 				@fn  _    _    _              @spc      bspc _    _    _    _    _
 )
 
@@ -111,13 +114,13 @@ allow-cmd true
 
 
 ;; ---- Raise ----- {{{
-	(defalias rs (tap-hold-next-release 500 n (layer-toggle raise)))
+	(defalias rs (tap-hold-next-release 500 ] (layer-toggle raise)))
 	(deflayer raise
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
-				caps @à   _    @é   _    _    _    @ù   ^   \_   +    _    _    _
-				_    @!   @    #    $    %    @^    &    *    \(   @sep |    _    
-				@Srs _    @grv    _    @ç   _    _    _    _    {    }    _    @Srs
+				caps @à   _    @é   _    _    _    _    @ù   ^   \_   +     _    _
+				_    @!   @    #    $    %    _    @^    &    *    \(   @sep |
+				@Srs @grv _    @ç   _    _    _    _    _    _    _    _    @Srs
 				_    _    _    _              _         _    _    _    _    _    _
 )
 
@@ -130,20 +133,20 @@ allow-cmd true
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    @À   _    @É   _    _    _    _    _    _    _    _    _    _
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-				_    _    _    _    @Ç   _    _    _    _    _    _    _    _
+				_    _    _    @Ç   _    _    _    _    _    _    _    _    _
 				_    _    _    _              _         _    _    _    _    _    _
 )
 ;; ---------------- }}}
 
 
 ;; ---- Lower ----- {{{
-(defalias lw (tap-hold-next-release 500 v (layer-toggle lower)))
+(defalias lw (tap-hold-next-release 500 [ (layer-toggle lower)))
 (deflayer lower
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    @è   _    _    _    @ù   @ê   -    =    _    _    _
-				_    @1   2    3    4    5    6    7    8    9    @0   \\   _    
-				@Slw _    @tld _    _    _    _    _    _    [    ]    _    @Slw
+				_    _    {    [    \(   _    _    _    \)   ]    }    _    _    
+				@Slw _    @tld _    _    _    _    _    _    _    _    _    @Slw
 				_    _    _    _              _         _    _    _    _    _    _
 )
 
@@ -167,8 +170,8 @@ allow-cmd true
 (deflayer space 
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
 				     _    _    _    _    _    _    _    _    _    _    _    _    _    
-				_    _    _    _    _    _    _    pgdn pgup _    _    _    _    _
-				_    _    _    lalt lmet _    left down up   rght _    _    _    
+				_    _    _    _    _    _    _    _    pgdn pgup _    _    _    _
+				_    _    _    lalt lmet _    _    left down up   rght _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _
 				_    _    _    _              _         del  _    _    _    _    _
 )
