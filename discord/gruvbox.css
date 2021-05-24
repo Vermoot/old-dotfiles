@@ -45,8 +45,8 @@ div[class*="macButtons"] {
   visibility: collapse;
 }
 
-.platform-osx .wrapper-1Rf91z {
-  margin-top: 10px;
+.platform-osx .wrapper-3NnKdC {
+  margin-top: 12px;
 }
 
 /* tamer timestamp color */
@@ -64,6 +64,10 @@ span[class*="timestamp"] > span {
   background-color: #3c3836 !important;
 }
 
+.channelName-2YrOjO, .subtitle-3V1p2E {
+    /* color: var(--interactive-normal); */
+}
+
 /**
     Duvbox - adapted for Discord
     
@@ -72,10 +76,8 @@ span[class*="timestamp"] > span {
 
 /* Iosevka, codeblock font */
 
-@import url("https://cdn.jsdelivr.net/npm/@typopro/web-iosevka@3.7.5/TypoPRO-Iosevka.css");
-
-code, .hljs-string {
-    font-family: "JetBrainsMono Nerd Font" !important;
+.hljs, span[class*="hljs"] {
+    font-family: JetBrainsMono Nerd Font !important;
     font-weight: 400;
 }
 
@@ -487,7 +489,7 @@ div[class*="roleName"] {
 /** and the pill beside it */
 div[class*="pill"] > span[class*="item"] {
     background-color: var(--text-normal);
-    width: 10px;
+    width: 8px;
 }
 
 /** Deleted Messages */

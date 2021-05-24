@@ -54,7 +54,7 @@ allow-cmd true
 (defalias esc (tap-hold-next-release 500 esc C-A-S-met))      ;; Esc as Esc/Hyper
 
 ;; -- Home row mods --
-(defalias asf (tap-hold-next-release 200 a lsft))      ;; Shift on A
+(defalias asf (tap-hold-next-release 150 a lsft))      ;; Shift on A
 (defalias osf (tap-hold-next-release 200 o rsft))      ;; Shift on O
 (defalias rct (tap-hold-next-release 300 r lctl))      ;; Ctrl on R
 (defalias ict (tap-hold-next-release 300 i rctl))      ;; Ctrl on L
@@ -97,7 +97,7 @@ allow-cmd true
 				     _    _    _    _    _    _    _    _    _    _    _    _    _
 				@tab q    w    f    p    b    /    j    l    u    y    ;    \    _
 				@esc @asf @rct @sal @tcd g    grv  m    @ncd @eal @ict @osf '
-				_    z    x    c    d    v    @lw  @rs  k    h    ,    .    @sla
+				_    z    x    @c    d    v    @lw  @rs  k    h    ,    .    @sla
 				@fn  _    _    _              @spc      bspc _    _    _    _    _
 )
 
@@ -177,5 +177,18 @@ allow-cmd true
 )
 ;; ---------------- }}}
 
+
+;; ---- Num ---- {{{
+(defalias c (tap-hold-next-release 500 c (layer-toggle num)))
+(deflayer num
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    kp7  kp8  kp9  _    _    _
+				_    _    _    _    _    _    _    _    kp4  kp5  kp6  _    _    
+				_    _    _    _    _    _    _    _    _    kp1  kp2  kp3  _
+				_    _    _    _             kp0       kpdot _    _    _    _    _
+)
+
+;; ---------------- }}}
 
 ;; ----------------------------------------------------------- }}}

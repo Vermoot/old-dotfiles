@@ -1,3 +1,10 @@
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+# Launch limelight
+killall limelight &> /dev/null
+limelight &> /dev/null &
+
 # Aliases {{{
 alias rule="yabai -m rule --add"
 alias config="yabai -m config"
@@ -13,7 +20,7 @@ config window_opacity               off
 config window_opacity_duration      2
 config active_window_opacity        1.0
 config normal_window_opacity        0.9
-config window_border                on
+config window_border                off
 config window_border_width          3
 config active_window_border_color   0xffd5c4a1
 config normal_window_border_color   0xff665c54
@@ -27,7 +34,8 @@ config mouse_drop_action            swap
 
 # general space settings
 config layout                       bsp
-config top_padding                  40
+config external_bar 								all:0:0
+config top_padding                  8
 config bottom_padding               8
 config left_padding                 8
 config right_padding                8
@@ -40,11 +48,10 @@ config window_gap                   8
 ##############
 # Exceptions {{{
 
-rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password|Messages|WebTorrent|Karabiner-Elements|Karabiner-EventViewer" manage=off
-rule title="Discord Updater|Software Update|Fullscreen Controls" manage=off border=off
+rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password|Messages|WebTorrent|Karabiner-Elements|Karabiner-EventViewer|Mail|Transmission" manage=off
+rule title="Discord Updater|Software Update|Fullscreen Controls" manage=off
 rule title='^Ouverture' manage=off layer=above
-rule app='IINA' border=off
-rule app='Messages' border=on
+rule app="Firefox" title="^Extension" manage=off layer=above
 # }}}
 
 

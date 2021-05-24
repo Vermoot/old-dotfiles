@@ -1,0 +1,7 @@
+alias config="limelight -m config"
+
+config placement 						exterior #interior
+config radius 							12
+config width 								1
+config active_color 				0xffd5c4a1
+config normal_color 				0x00665c54

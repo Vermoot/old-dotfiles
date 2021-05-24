@@ -11,7 +11,7 @@ font:
 
 # Options
 window:
-  decorations: "none"
+  decorations: buttonless
   padding:
     x: 30
     y: 30
