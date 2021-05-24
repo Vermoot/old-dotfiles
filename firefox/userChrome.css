@@ -219,12 +219,12 @@ transition: .2s ease .8s;
 
 :root {
   --uc-autohide-toolbox-delay: 800ms; /* Wait 0.1s before hiding toolbars */
-  --uc-toolbox-translation: -40px;
+  --uc-toolbox-translation: -45px;
 }
 
 #navigator-toolbox {
-  width: 30% !important;
-  left: calc(35% + var(--sidebar-min-width)) !important;
+  width: 10% !important;
+  left: calc(45% + var(--sidebar-min-width) - 30%) !important;
   position: fixed !important;
   display: block;
   transition: left 0ms linear 882ms,
@@ -233,7 +233,7 @@ transition: .2s ease .8s;
               opacity 82ms linear !important;
   transition-delay: var(--uc-autohide-toolbox-delay) !important;
   transform: translate(0, var(--uc-toolbox-translation));
-  opacity: 0;
+  opacity: 1;
   line-height: 0;
   z-index: 2;
   pointer-events: all;
