@@ -219,7 +219,7 @@ transition: .2s ease .8s;
 
 :root {
   --uc-autohide-toolbox-delay: 800ms; /* Wait 0.1s before hiding toolbars */
-  --uc-toolbox-translation: -45px;
+  --uc-toolbox-translation: -50px;
 }
 
 #navigator-toolbox {
