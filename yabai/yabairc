@@ -53,12 +53,16 @@ rule title="Discord Updater|Software Update|Fullscreen Controls" manage=off
 rule title='^Ouverture' manage=off layer=above
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 rule app="Firefox" title="^Extension" manage=off layer=above
 =======
 rule app='IINA' border=off
 rule app='Sorted' title!='Sorted' border=off
 rule app='Messages' border=on
 >>>>>>> 889dbc1f8f8f3f11f5962cdb2c7ab37b17aa8955
+=======
+rule app="Firefox" title="^Extension" manage=off layer=above
+>>>>>>> 9fd8ed3 (Ryzentosh install stuff)
 =======
 rule app="Firefox" title="^Extension" manage=off layer=above
 >>>>>>> 9fd8ed3 (Ryzentosh install stuff)

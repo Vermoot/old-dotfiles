@@ -5,6 +5,9 @@
 # Manipulate spaces {{{
 
 # Switch spaces
+# hyper - i :      		yabai -m space --focus "$(yabai -m query --spaces --display \
+										# | jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
+
 hyper - i :      		yabai -m space --focus "$(yabai -m query --spaces --display \
 			              | jq 'reverse | nth(index(map(select(.focused == 1))) - 1).index')"
 
