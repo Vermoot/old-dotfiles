@@ -50,14 +50,11 @@ config window_gap                   8
 
 rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password|Messages|WebTorrent|Karabiner-Elements|Karabiner-EventViewer|Mail|Transmission" manage=off
 rule title="Discord Updater|Software Update|Fullscreen Controls" manage=off
-rule title='^Ouverture' manage=off layer=above
-<<<<<<< HEAD
+rule title='^Ouverture|^Copier' manage=off layer=above
 rule app="Firefox" title="^Extension" manage=off layer=above
 =======
 rule app='IINA' border=off
 rule app='Sorted' title!='Sorted' border=off
-rule app='Messages' border=on
->>>>>>> 889dbc1f8f8f3f11f5962cdb2c7ab37b17aa8955
 # }}}
 
 
