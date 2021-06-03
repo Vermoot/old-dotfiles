@@ -1,4 +1,4 @@
 #!/bin/bash
 
-/sbin/kextload /Users/vermoot/Projects/kmonad/c_src/mac/Karabiner-DriverKit-VirtualHIDDevice/dist/Karabiner-DriverKit-VirtualHIDDevice-1.15.0.pkg
+/sbin/kextload /Library/SystemExtensions/06C4C780-EAA7-4BAF-BCA4-C5FAF0420739/org.pqrs.Karabiner-DriverKit-VirtualHIDDevice.dext
 /usr/local/bin/kmonad /Users/vermoot/.config/kmonad/applekeeb.kbd
