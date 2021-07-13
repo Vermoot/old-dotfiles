@@ -54,8 +54,8 @@ allow-cmd true
 (defalias esc (tap-hold-next-release 500 esc C-A-S-met))      ;; Esc as Esc/Hyper
 
 ;; -- Home row mods --
-(defalias asf (tap-hold-next-release 150 a lsft))      ;; Shift on A
-(defalias osf (tap-hold-next-release 200 o rsft))      ;; Shift on O
+(defalias asf (tap-hold-next-release 175 a lsft))      ;; Shift on A
+(defalias osf (tap-hold-next-release 250 o rsft))      ;; Shift on O
 (defalias rct (tap-hold-next-release 300 r lctl))      ;; Ctrl on R
 (defalias ict (tap-hold-next-release 300 i rctl))      ;; Ctrl on L
 (defalias sal (tap-hold-next-release 300 s lalt))      ;; Alt on S
@@ -92,12 +92,13 @@ allow-cmd true
 ;; --------------- LAYERS ----------------------------------- {{{
 
 ;; ---- Default --- {{{
+(defalias def (layer-switch default))
 (deflayer default
 				_    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
 				     _    _    _    _    _    _    _    _    _    _    _    _    _
 				@tab q    w    f    p    b    /    j    l    u    y    ;    \    _
 				@esc @asf @rct @sal @tcd g    grv  m    @ncd @eal @ict @osf '
-				_    z    x    @c    d    v    @lw  @rs  k    h    ,    .    @sla
+				_    z    x    @c   d    v    @lw  @rs  k    h    ,    .    @sla
 				@fn  _    _    _              @spc      bspc _    _    _    _    _
 )
 
@@ -169,7 +170,7 @@ allow-cmd true
 (defalias spc (tap-hold-next-release 500 spc (layer-toggle space)))
 (deflayer space 
 				_    _    _    _    _    _    _    _    _    _    _    _    _    
-				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				     @def @tra _    _    _    _    _    _    _    _    _    _    _    
 				_    _    _    _    _    _    _    _    pgdn pgup _    _    _    _
 				_    _    _    lalt lmet _    _    left down up   rght _    _    
 				_    _    _    _    _    _    _    _    _    _    _    _    _
@@ -190,5 +191,20 @@ allow-cmd true
 )
 
 ;; ---------------- }}}
+
+
+;; ---- Transparent ---- {{{
+(defalias tra (layer-switch trans))
+(deflayer trans
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				@tab _    _    _    _    _    _    _    _    _    _    _    _    _
+				@esc _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    _    _    _    _    _
+				_    _    _    _             @spc       bspc _    _    _    _    _
+)
+
+;; ---------------- }}}
+
 
 ;; ----------------------------------------------------------- }}}
