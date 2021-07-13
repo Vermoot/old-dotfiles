@@ -57,6 +57,7 @@ set clipboard^=unnamed  " Sync clipboard and default register
 set whichwrap+=<,>,h,l " Allow arrows and h/l to move to the previous/next line
 set wrap linebreak nolist " Don't wrap in the middle of a word
 set mouse=a
+set expandtab
 
 " Nerdcommenter stuff
 let NERDSpaceDelims=1 " Add spaces with comments
