@@ -177,6 +177,7 @@ bind F hint -W tabopen
 
 " ---- Autocmds ---- {{{
 autocmd DocStart https://www.youtube.com/watch mode ignore
+autocmd DocStart https://monkeytype.com/ mode ignore
 autocmd DocLoad ^https://github.com/tridactyl/tridactyl/issues/new$ issue
 autocmd TriStart .* source_quiet
 " ---- END Autocmds ---- }}}
