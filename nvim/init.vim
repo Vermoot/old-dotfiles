@@ -31,6 +31,10 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'preservim/nerdcommenter'
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'tridactyl/vim-tridactyl'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'akinsho/bufferline.nvim'
+Plug 'elkowar/yuck.vim'
+Plug 'fladson/vim-kitty'
 
 " Color Schemes
 Plug 'joshdick/onedark.vim'
@@ -59,15 +63,26 @@ set wrap linebreak nolist " Don't wrap in the middle of a word
 set mouse=a
 set expandtab
 
+" bufferline
+lua << EOF
+require("bufferline").setup{}
+EOF
+nnoremap <silent><C-M-S-i> :BufferLineCycleNext<CR>
+nnoremap <silent><C-M-S-m> :BufferLineCyclePrev<CR>
+
 " Nerdcommenter stuff
 let NERDSpaceDelims=1 " Add spaces with comments
 
+" Auto-pairs
+let g:AutoPairsMultilineClose = 0
 
 " Remaps {{{
 
 " j and k go up/down wrapped lines
 map j gj
 map k gk
+map <Up> g<Up>
+map <Down> g<Down>
 
 " Space Leader
 let mapleader=" "

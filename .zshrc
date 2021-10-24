@@ -20,8 +20,8 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/.config/starship
 
- export VISUAL=nvim
- export EDITOR=nvim
+export VISUAL=nvim
+export EDITOR=nvim
 
 # -------------------------------------------------- }}}
 

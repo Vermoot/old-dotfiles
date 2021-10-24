@@ -7,6 +7,7 @@ limelight &> /dev/null &
 
 # Aliases {{{
 alias rule="yabai -m rule --add"
+alias remrule="yabai -m rule --remove"
 alias config="yabai -m config"
 # }}}
 
@@ -49,11 +50,12 @@ config window_gap                   8
 # Exceptions {{{
 
 rule app="Préférences Système|Keka|Drop|Archetype Cory Wong|Spark|1Password|Messages|WebTorrent|Karabiner-Elements|Karabiner-EventViewer|Mail|Transmission|Sorted" manage=off
-rule title="Discord Updater|Software Update|Fullscreen Controls" manage=off
+rule title="Discord Updater|Software Update|Fullscreen Controls|Spectra Lexer" manage=off
 rule title='^Ouverture|^Copier' manage=off layer=above
 rule app="Firefox" title="^Extension" manage=off layer=above
 rule app='IINA' border=off
 rule app='Sorted' title!='Sorted' border=off
+rule app='basics' manage=on
 # }}}
 
 
@@ -65,26 +67,42 @@ rule app='Sorted' title!='Sorted' border=off
 if [ $(yabai -m query --displays | jq '. | length') = 2 ] ; then
 	# Number of spaces on display 1
 	d1s=$(yabai -m query --spaces --display 1 | jq length)
+	d2s=$(yabai -m query --spaces --display 2 | jq length)
 
 	# Firefox to space 1 of display 1
-	rule app="Firefox" space=1
+	rule app="Firefox" space=1 label="layout1"
 
 	# iTerm to space 2 of display 1
-	rule app="iTerm" space=2
-
-	# Spotify to space 1 of display 2
-	rule app="Spotify" space=$(($d1s+1))
+	rule app="Alacritty" space=2 label="layout2"
 
 	# Discord to space 2 of display 2
-	rule app="Discord" space=$(($d1s+2))
-
-	# Twitterrific to space 3 of display 2
-	rule app="Twitterrific" space=$(($d1s+3))
+	rule app="Discord" space=$(($d1s+2)) label="layout3"
+	rule app="Slack" space=$(($d1s+2)) label="layout4"
 
 	# Messages to space 3 of display 2
-	rule app="Messages" space=$(($d1s+3))
+	rule app="Messages" space=$(($d1s+3)) label="layout5"
+
+	# Spotify to last of display 2
+	rule app="Spotify" space=$(($d1s+$d2s)) label="layout6"
 fi
 
+if [ $(yabai -m query --displays | jq '. | length') = 1 ] ; then
+	rule app="Firefox" space=1
+	rule app="Discord" space=2
+	rule app="Slack" space=2
+	rule app="Spark" space=2
+	rule app="Alacritty" space=3
+	rule app="Spotify" space=$(yabai -m query --displays | jq '. | length')
+fi
+
+sleep 10
+
+remrule "layout1"
+remrule "layout2"
+remrule "layout3"
+remrule "layout4"
+remrule "layout5"
+remrule "layout6"
 # }}}
 
 # ############

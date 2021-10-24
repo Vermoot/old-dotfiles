@@ -1,13 +1,16 @@
 # Fonts
 font:
-  size: 12
+  size: 16
   normal:
-    family: JetBrainsMono Nerd Font
-    style: Regular
+    family: Terminus (TTF)
+    # style: Regular
   bold:
-    family: JetBrainsMono Nerd Font
+    family: Terminus (TTF)
   italic:
-    family: JetBrainsMono Nerd Font
+    family: Terminus (TTF)
+  # offset:
+    # x: 1
+    # y: 1
 
 # Options
 window:
@@ -19,7 +22,7 @@ window:
 
 # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
 # screens and make reading text a little easier.
-scale_with_dpi: true
+scale_with_dpi: false
 
 # Thin stroke font rendering (OS X only)
 #
@@ -59,4 +62,4 @@ colors:
     white:   '#ebdbb2'
 
 key_bindings:
-  - { key: N,        mods: Command, command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] } }
+  - { key: N,        mods: Command, action: CreateNewWindow}

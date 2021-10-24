@@ -11,6 +11,15 @@
     font-family: SF Compact Rounded !important;
 }
 
+/* Search frame color */
+.theme-dark .container-3ayLPN {
+    background-color: var(--background-secondary);
+}
+
+.theme-dark .option-96V44q:after {
+    background: none;
+}
+
 /* Video call buttons background */
 .controlButton-2MhVEL {
     background-color: transparent !important;
@@ -19,6 +28,15 @@
 /* change keyboard focus color */
 .theme-dark {
     --focus-primary: var(--text-normal); 
+}
+
+/* Reply background color */
+.replying-1x3H0T {
+    background-color: var(--background-tertiary);
+}
+
+.replying-1x3H0T:before {
+    background-color: var(--text-muted);
 }
 
 /* selected gif color */
@@ -296,9 +314,11 @@ div[class*="contextMenu"] {
     background-color: var(--background-secondary);
 }
 
-div[class*="header"] {
-    background-color: var(--background-secondary)
-}
+/*
+ * div[class*="header"] {
+ *     background-color: var(--background-secondary)
+ * }
+ */
 
 div[class*="details"] {
     color: var(--text-normal);

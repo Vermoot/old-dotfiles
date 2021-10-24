@@ -1,4 +1,3 @@
-; {:simlayers {:alt {:pointer_button :button6}}
 {
  :main [
   {:des "G600"

@@ -16,14 +16,14 @@ bind --mode=ex <Tab> ex.insert_space_or_completion
 bind --mode=ex <PageUp> ex.prev_history
 bind --mode=ex <PageDown> ex.next_history
 unbind --mode=ex <Space>
-bind n scrollline 10
-bind e scrollline -10
 bind <S-ArrowDown> scrollline 2
 bind <S-ArrowUp> scrollline -2
-bind m scrollpx -50
-bind i scrollpx 50
 bind <S-ArrowLeft> scrollpx -10
 bind <S-ArrowRight> scrollpx 10
+bind n scrollline 10
+bind e scrollline -10
+bind m scrollpx -50
+bind i scrollpx 50
 bind I forward
 bind M back
 bind E tabprev
