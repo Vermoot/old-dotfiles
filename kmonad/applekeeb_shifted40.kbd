@@ -1,0 +1,210 @@
+#| --------------- Keeb Pattern ------------------------------ {{{
+
+(deflayer 
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    _    _    _    _    _    _
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    _    _    _    _    _
+				_    _    _    _              _         _    _    _    _    _    _
+)
+
+;; ISO Apple keyboard but the paragraph key (left of 1) is omitted because it makes kmonad crash anyway (see #106)
+
+------------------------------------------------------------- }}} |#
+
+
+
+
+;; --------------- defcfg ------------------------------------ {{{{{{}}}
+
+(defcfg
+input (iokit-name "Apple Internal Keyboard / Trackpad")  ;; Macbook keyboard
+output (kext)
+
+fallthrough true
+allow-cmd true
+)
+
+;; ----------------------------------------------------------- }}}
+
+
+
+
+;; --------------- defsrc ------------------------------------ {{{
+
+(defsrc
+				esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+				     1    2    3    4    5    6    7    8    9    0    -    =    bspc
+				tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret
+				caps a    s    d    f    g    h    j    k    l    ;    '    \    
+				lsft grv  z    x    c    v    b    n    m    ,    .    /    rsft
+				fn   lctl lalt lmet           spc       rmet ralt left down up   rght
+)
+
+;; ----------------------------------------------------------- }}}
+
+
+
+
+;; --------------- Button Definitions ------------------------ {{{
+
+;; -- Mod-tap --
+(defalias tab (tap-hold-next-release 500 tab C-A-sft))   ;; Tab as Tab/Meh
+(defalias esc (tap-hold-next-release 500 esc C-A-S-met))      ;; Esc as Esc/Hyper
+
+;; -- Home row mods --
+(defalias asf (tap-hold-next-release 175 a lsft))      ;; Shift on A
+(defalias osf (tap-hold-next-release 250 o rsft))      ;; Shift on O
+(defalias rct (tap-hold-next-release 300 r lctl))      ;; Ctrl on R
+(defalias ict (tap-hold-next-release 300 i rctl))      ;; Ctrl on L
+(defalias sal (tap-hold-next-release 300 s lalt))      ;; Alt on S
+(defalias eal (tap-hold-next-release 300 e ralt))      ;; Alt on E
+(defalias tcd (tap-hold-next-release 300 t lmet))      ;; Cmd on T
+(defalias ncd (tap-hold-next-release 300 n rmet))      ;; Cmd on N
+
+;; -- Undead characters --
+(defalias apo (tap-macro ' spc))
+(defalias grv (tap-macro grv spc))
+(defalias tld (tap-macro ~ spc))
+(defalias ^ (tap-macro A-i spc))
+
+;; -- Accents --
+(defalias é (tap-macro ' e))
+(defalias É (tap-macro ' S-e))
+(defalias è (tap-macro grv e))
+(defalias ê (tap-macro A-i e))
+(defalias Ê (tap-macro A-i S-e))
+(defalias à (tap-macro grv a))
+(defalias À (tap-macro grv S-a))
+(defalias ù (tap-macro grv u))
+(defalias ç A-c)
+(defalias Ç A-S-c)
+
+;; -- Misc --
+(defalias sla (tap-hold-next-release 200 / rsft))
+
+;; ---------------------------------------------------------- }}}
+
+
+
+
+;; --------------- LAYERS ----------------------------------- {{{
+
+;; ---- Default --- {{{
+(defalias def (layer-switch default))
+(deflayer default
+				_    brdn brup lp   mctl bldn blup prev pp   next mute vold volu
+				     _    _    _    _    _    _    _    _    _    _    _    _    _
+				@tab q    w    f    p    b    /    j    l    u    y    ;    \    _
+				@esc @asf @rct @sal @tcd g    grv  m    @ncd @eal @ict @osf '
+				_    z    x    @c   d    v    @lw  @rs  k    h    ,    .    @sla
+				@fn  _    _    _              @spc      bspc _    _    _    _    _
+)
+
+(defalias fn (around (layer-toggle function) fn))	
+(deflayer function
+        _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+             _    _    _    _    _    _    _    _    _    _    _    _    _
+        _    _    _    _    _    _    _    _    _    _    _    _    _    _
+        _    _    _    _    _    _    _    _    _    _    _    _    _
+        _    _    _    _    _    _    _    _    _    _    _    _    _
+        _    _    _    _              _         _    _    _    _    _    _
+)
+;; ---------------- }}}
+
+
+;; ---- Raise ----- {{{
+	(defalias rs (tap-hold-next-release 500 ] (layer-toggle raise)))
+	(deflayer raise
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				caps @à   _    @é   _    _    _    _    @ù   ^   \_   +     _    _
+				_    @!   @    #    $    %    _    @^    &    *    \(   @sep |
+				@Srs @grv _    @ç   _    _    _    _    _    _    _    _    @Srs
+				_    _    _    _              _         _    _    _    _    _    _
+)
+
+;; Shifted
+(defalias Srs (layer-toggle shift-raise))
+(defalias sep (tap-hold-next-release 500 \) (layer-toggle shift-raise)))
+(defalias ! (tap-hold-next-release 500 ! (layer-toggle shift-raise)))
+(deflayer shift-raise
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    @À   _    @É   _    _    _    _    _    _    _    _    _    _
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    @Ç   _    _    _    _    _    _    _    _    _
+				_    _    _    _              _         _    _    _    _    _    _
+)
+;; ---------------- }}}
+
+
+;; ---- Lower ----- {{{
+(defalias lw (tap-hold-next-release 500 [ (layer-toggle lower)))
+(deflayer lower
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    @è   _    _    _    @ù   @ê   -    =    _    _    _
+				_    _    {    [    \(   _    _    _    \)   ]    }    _    _    
+				@Slw _    @tld _    _    _    _    _    _    _    _    _    @Slw
+				_    _    _    _              _         _    _    _    _    _    _
+)
+
+;; Shifted
+(defalias Slw (layer-toggle shift-lower))
+(defalias 1 (tap-hold-next-release 500 1 (layer-toggle shift-lower)))
+(defalias 0 (tap-hold-next-release 500 0 (layer-toggle shift-lower)))
+(deflayer shift-lower
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    @Ê   _    _    _    _    _
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    _    _    _    _    _
+				_    _    _    _              _         _    _    _    _    _    _
+)
+;; ---------------- }}}
+
+
+;; ---- Space ----- {{{
+(defalias spc (tap-hold-next-release 500 spc (layer-toggle space)))
+(deflayer space 
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     @def @tra _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    pgdn pgup _    _    _    _
+				_    _    _    lalt lmet _    _    left down up   rght _    _    
+				_    _    _    _    _    _    _    _    _    _    _    _    _
+				_    _    _    _              _         del  _    _    _    _    _
+)
+;; ---------------- }}}
+
+
+;; ---- Num ---- {{{
+(defalias c (tap-hold-next-release 500 c (layer-toggle num)))
+(deflayer num
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    kp7  kp8  kp9  _    _    _
+				_    _    _    _    _    _    _    _    kp4  kp5  kp6  _    _    
+				_    _    _    _    _    _    _    _    _    kp1  kp2  kp3  _
+				_    _    _    _             kp0       kpdot _    _    _    _    _
+)
+
+;; ---------------- }}}
+
+
+;; ---- Transparent ---- {{{
+(defalias tra (layer-switch trans))
+(deflayer trans
+				_    _    _    _    _    _    _    _    _    _    _    _    _    
+				     _    _    _    _    _    _    _    _    _    _    _    _    _    
+				@tab _    _    _    _    _    _    _    _    _    _    _    _    _
+				@esc _    _    _    _    _    _    _    _    _    _    _    _    
+				_    _    _    _    _    _    _    _    _    _    _    _    _
+				_    _    _    _             @spc       bspc _    _    _    _    _
+)
+
+;; ---------------- }}}
+
+
+;; ----------------------------------------------------------- }}}
