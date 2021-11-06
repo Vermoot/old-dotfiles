@@ -29,6 +29,7 @@ bind M back
 bind E tabprev
 bind N tabnext
 bind F hint -W tabopen
+unbind --mode=normal <C-f>
 
 " --- END Binds ---- }}}
 
