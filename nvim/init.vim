@@ -35,6 +35,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/bufferline.nvim'
 Plug 'elkowar/yuck.vim'
 Plug 'fladson/vim-kitty'
+Plug 'baskerville/vim-sxhkdrc'
 
 " Color Schemes
 Plug 'joshdick/onedark.vim'
@@ -57,7 +58,7 @@ let g:airline_theme='deus'
 set termguicolors
 set foldmethod=marker
 set number
-set clipboard^=unnamed  " Sync clipboard and default register
+set clipboard=unnamedplus  " Sync clipboard and default register
 set whichwrap+=<,>,h,l " Allow arrows and h/l to move to the previous/next line
 set wrap linebreak nolist " Don't wrap in the middle of a word
 set mouse=a
