@@ -1,6 +1,6 @@
 # Fonts
 font:
-  size: 16
+  size: 12
   normal:
     family: Terminus (TTF)
     # style: Regular
@@ -14,7 +14,7 @@ font:
 
 # Options
 window:
-  decorations: buttonless
+  decorations: full
   padding:
     x: 30
     y: 30
@@ -62,4 +62,6 @@ colors:
     white:   '#ebdbb2'
 
 key_bindings:
-  - { key: N,        mods: Command, action: CreateNewWindow}
+  # - { key: N,        mods: Command, action: CreateNewWindow}
+  - { key: W, mods: Control, action: Quit }
+  - { key: N, mods: Control, action: SpawnNewInstance }

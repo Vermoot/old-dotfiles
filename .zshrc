@@ -23,6 +23,8 @@ export STARSHIP_CONFIG=~/.config/starship
 export VISUAL=nvim
 export EDITOR=nvim
 
+export PATH="${HOME}/.local/bin:${PATH}"
+
 # -------------------------------------------------- }}}
 
 # ------------------ Aliases ----------------------- {{{
