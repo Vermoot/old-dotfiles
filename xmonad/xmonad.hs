@@ -1,9 +1,10 @@
--- Imports {{{
 import XMonad
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.DebugEvents
+import XMonad.ManageHook
 import qualified XMonad.Hooks.ManageHelpers as ManageHelpers
 
 import XMonad.Util.EZConfig
@@ -11,10 +12,12 @@ import XMonad.Util.Ungrab
 import XMonad.Util.Loggers
 import XMonad.Util.WorkspaceCompare (getSortByIndex)
 import XMonad.Actions.CycleWS
+import XMonad.Actions.TiledWindowDragging
+import XMonad.Actions.SwapWorkspaces
+import XMonad.Layout.DraggingVisualizer
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Magnifier
 import XMonad.Layout.ImageButtonDecoration
-import XMonad.Layout.BorderResize
 import XMonad.Layout.WindowArranger
 import XMonad.Layout.ToggleLayouts
 import XMonad.Layout.IndependentScreens
@@ -22,10 +25,12 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Fullscreen
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.MouseResizableTile
 -- import XMonad.Layout.Gaps
 
 import qualified XMonad.StackSet as W
-import qualified Data.Map as M
+import qualified Data.Map.Strict as M
 -- END Imports }}}
 
 main :: IO ()
@@ -36,40 +41,46 @@ main = xmonad
      . fullscreenSupportBorder
      $ myConfig
 
-
+myModMask = mod4Mask
 myConfig = def
     { 
-      modMask    = mod4Mask -- Rebind Mod to the GUI key
+      modMask    = myModMask -- Rebind Mod to the GUI key
     , terminal = "alacritty"
     , layoutHook = myLayout -- Use custom layouts
-    , handleEventHook = fullscreenEventHook
+    , handleEventHook = fullscreenEventHook <+> debugEventsHook
     , manageHook = myManageHook -- Match on certain windows
     , keys = myKeys
+    , mouseBindings = myMouseBindings
     , focusFollowsMouse = False
-    , borderWidth = 2
+    , borderWidth = 1
+    , normalBorderColor = "#665c54"
+    , focusedBorderColor = "#ebdbb2"
     , clickJustFocuses = False
     , workspaces = myWorkspaces
     }
 
--- myWorkspaces = withScreen 1 (map show [1..6 :: Int])
-            -- ++ withScreen 2 (map show [1..6 :: Int])
-myWorkspaces = ["web", "discord", "term1", "term2", "spotify"]
+myWorkspaces = withScreen 1 (map show [1..6 :: Int])
+            ++ withScreen 2 (map show [1..6 :: Int])
+-- myWorkspaces = ["web", "discord", "misc", "misc2","misc3", "misc4", "spotify"]
 
-myLayout = borderResize
-         . windowArrange
-         . spacingWithEdge 4
+myLayout = windowArrange
+         . draggingVisualizer
+         . spacingRaw False (Border 4 4 4 4) True (Border 4 4 4 4) True
 
          $ tiled
        ||| Mirror tiled
        ||| Full 
        ||| threeCol
   where
-    tiled    = Tall nmaster delta ratio
-    nmaster  = 1       -- Default number of windows in the master pane
+    tiled    = mouseResizableTile { nmaster = nmaster
+                                  , fracIncrement = delta
+                                  , masterFrac = ratio
+                                  , draggerType = FixedDragger 4 8}
+    nmaster = 1        -- Default number of windows in the master pane
     ratio    = 1/2     -- Default proportion of screen occupied by master pane
-    delta    = 3/100   -- Percent of screen to increment by when resizing panes
+    delta    = 6/100   -- Percent of screen to increment by when resizing panes
 
-    threeCol = magnifiercz' 1.3 $ ThreeColMid nmaster delta ratio
+    threeCol = magnifiercz' 1.3 $ ThreeCol nmaster delta ratio
 
 -- Key bindings {{{
 myKeys :: XConfig Layout -> M.Map (ButtonMask, KeySym) (X ())
@@ -77,23 +88,30 @@ myKeys = \c -> mkKeymap c $
     [
     -- Base important keybinds
       ("M-<Return>",      spawn "alacritty")
-    , ("M-p",             spawn "dmenu_run")
+    , ("M-<Space>",       spawn "dmenu_run")
+    , ("C-<Space>",       spawn "rofi -combi-modi 'window,drun' -show combi -modi combi")
     , ("M-q",             spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi")
     , ("M-c",             kill)
     , ("M-f",             withFocused $ toggleFloat)
 
     -- Layout stuff
-    , ("M-<Space>",       sendMessage NextLayout)
+    , ("M-d",             sendMessage NextLayout)
 
     -- Focus windows
     , ("M-n",             windows W.focusDown )
     , ("M-e",             windows W.focusUp )
-    , ("M-<Return>",      windows W.focusMaster )
+    , ("M-l",             windows W.focusMaster )
 
-    -- Swap windows
+    -- Manipulate windows
     , ("M-C-n",           windows W.swapDown )
     , ("M-C-e",           windows W.swapUp )
-    , ("M-C-<Return>",    windows W.swapMaster )
+    , ("M-C-l",           windows W.swapMaster )
+
+    -- Resize tiled windows
+    , ("M-<Up>",          sendMessage ShrinkSlave)
+    , ("M-<Down>",        sendMessage ExpandSlave)
+    , ("M-<Left>",        sendMessage Shrink)
+    , ("M-<Right>",       sendMessage Expand)
 
     -- Focus workspaces & screens
     -- Forever remember the time when Elk said this "should be reasonably easy to do"
@@ -108,9 +126,11 @@ myKeys = \c -> mkKeymap c $
     , ("M-i",             moveTo Next hiddenWS)
     , ("M-C-m",           sequence_ [shiftToPrev, prevWS])
     , ("M-C-i",           sequence_ [shiftToNext, nextWS])
+    , ("M-M1-m",          swapTo Prev)
+    , ("M-M1-i",          swapTo Next)
     , ("M-o",             nextScreen)
     , ("M-C-o",           sequence_ [shiftNextScreen, nextScreen])
-    , ("M-M1-o",           swapNextScreen)
+    , ("M-M1-o",          sequence_ [swapNextScreen, nextScreen] )
 
     -- Increase or decrease number of windows in the master area
     , ("M-,",            sendMessage (IncMasterN 1))
@@ -134,8 +154,23 @@ currentScreen :: X ScreenId
 currentScreen = gets (W.screen . W.current . windowset)
 
 spacesOnCurrentScreen :: WSType
-spacesOnCurrentScreen = WSIs (isOnScreen `fmap` currentScreen)
+spacesOnCurrentScreen = WSIs $ do
+    s <- currentScreen
+    return $ \x -> W.tag x /= "NSP" && isOnScreen s x
 
+
+myMouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
+myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
+    -- mod-button1 %! Set the window to floating mode and move by dragging
+    [ ((modMask, button1), dragWindow)
+    -- [ ((modMask, button1), \w -> ifM (withWindowSet (M.member w . W.floating) (mouseMoveWindow w) (dragWindow w)))
+    -- mod-button2 %! Raise the window to the top of the stack
+    , ((modMask, button2), windows . (W.shiftMaster .) . W.focusWindow)
+    -- mod-button3 %! Set the window to floating mode and resize by dragging
+    , ((modMask, button3), \w -> focus w >> mouseResizeWindow w
+                                         >> windows W.shiftMaster)
+    -- you may also bind events to the mouse scroll wheel (button4 and button5)
+    ]
 -- END Key bindings }}}
 
 -- Xmobar {{{
@@ -172,7 +207,10 @@ myXmobarPP = def
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ resource  =? "Dialog"             --> ManageHelpers.doCenterFloat
-    , className =? "1Password"          --> doFloat
+    , className  =? "1password"         --> ManageHelpers.doCenterFloat
+    , stringProperty "WM_WINDOW_ROLE" =? "GtkFileChooserDialog"    --> ManageHelpers.doCenterFloat
+    , className =? "tint2"      --> hasBorder False
+    , ManageHelpers.isFullscreen          --> ManageHelpers.doFullFloat
     , fullscreenManageHook
     ]
 -- END Exception rules }}}
