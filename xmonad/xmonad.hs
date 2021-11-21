@@ -1,21 +1,17 @@
+-- Imports {{{
+    -- System
 import XMonad
-import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.StatusBar
-import XMonad.Hooks.StatusBar.PP
-import XMonad.Hooks.DebugEvents
-import XMonad.ManageHook
-import qualified XMonad.Hooks.ManageHelpers as ManageHelpers
+import qualified XMonad.StackSet as W
+import qualified Data.Map.Strict as M
 
-import XMonad.Util.EZConfig
-import XMonad.Util.Ungrab
-import XMonad.Util.Loggers
-import XMonad.Util.WorkspaceCompare (getSortByIndex)
-import XMonad.Actions.CycleWS
-import XMonad.Actions.TiledWindowDragging
-import XMonad.Actions.SwapWorkspaces
-import XMonad.Layout.DraggingVisualizer
+    -- Layouts
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.MouseResizableTile
+
+    -- Layout modifiers
+import XMonad.Layout.DraggingVisualizer
 import XMonad.Layout.Magnifier
 import XMonad.Layout.ImageButtonDecoration
 import XMonad.Layout.WindowArranger
@@ -24,46 +20,50 @@ import XMonad.Layout.IndependentScreens
 import XMonad.Layout.Spacing
 import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.MouseResizableTile
 -- import XMonad.Layout.Gaps
 
-import qualified XMonad.StackSet as W
-import qualified Data.Map.Strict as M
+    -- Hooks
+import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
+import XMonad.Hooks.DebugEvents
+import XMonad.Hooks.ManageDocks
+import XMonad.ManageHook
+import qualified XMonad.Hooks.ManageHelpers as ManageHelpers
+
+    -- Utilities
+import XMonad.Util.EZConfig
+import XMonad.Util.Ungrab
+import XMonad.Util.Loggers
+import XMonad.Util.WorkspaceCompare (getSortByIndex)
+
+    -- Actions
+import XMonad.Actions.CycleWS
+import XMonad.Actions.TiledWindowDragging
+import XMonad.Actions.SwapWorkspaces
 -- END Imports }}}
 
-main :: IO ()
-main = xmonad
-     . ewmhFullscreen
-     . ewmh
-     . withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) defToggleStrutsKey
-     . fullscreenSupportBorder
-     $ myConfig
+-- Defaults {{{
+myModMask            = mod4Mask
+myTerminal           = "alacritty"
 
-myModMask = mod4Mask
-myConfig = def
-    { 
-      modMask    = myModMask -- Rebind Mod to the GUI key
-    , terminal = "alacritty"
-    , layoutHook = myLayout -- Use custom layouts
-    , handleEventHook = fullscreenEventHook <+> debugEventsHook
-    , manageHook = myManageHook -- Match on certain windows
-    , keys = myKeys
-    , mouseBindings = myMouseBindings
-    , focusFollowsMouse = False
-    , borderWidth = 1
-    , normalBorderColor = "#665c54"
-    , focusedBorderColor = "#ebdbb2"
-    , clickJustFocuses = False
-    , workspaces = myWorkspaces
-    }
+myFocusFollowsMouse  = False
+myClickJustFocuses   = False
 
-myWorkspaces = withScreen 1 (map show [1..6 :: Int])
-            ++ withScreen 2 (map show [1..6 :: Int])
+myBorderWidth        = 1
+myNormalBorderColor  = "#665c54"
+myFocusedBorderColor = "#ebdbb2"
+
+myWorkspaces         = withScreen 1 (map show [1..6 :: Int])
+                    ++ withScreen 2 (map show [1..6 :: Int])
 -- myWorkspaces = ["web", "discord", "misc", "misc2","misc3", "misc4", "spotify"]
 
+-- END Defaults}}}
+
+-- Layouts {{{
 myLayout = windowArrange
+         . avoidStruts
          . draggingVisualizer
          . spacingRaw False (Border 4 4 4 4) True (Border 4 4 4 4) True
 
@@ -72,20 +72,36 @@ myLayout = windowArrange
        ||| Full 
        ||| threeCol
   where
-    tiled    = mouseResizableTile { nmaster = nmaster
+    tiled    = mouseResizableTile {
+                                    nmaster       = nmaster
                                   , fracIncrement = delta
-                                  , masterFrac = ratio
-                                  , draggerType = FixedDragger 4 8}
-    nmaster = 1        -- Default number of windows in the master pane
-    ratio    = 1/2     -- Default proportion of screen occupied by master pane
-    delta    = 6/100   -- Percent of screen to increment by when resizing panes
+                                  , masterFrac    = ratio
+                                  , draggerType   = FixedDragger 4 8
+                                  }
+    nmaster  = 1        -- Default number of windows in the master pane
+    ratio    = 1/2      -- Default proportion of screen occupied by master pane
+    delta    = 6/100    -- Percent of screen to increment by when resizing panes
 
     threeCol = magnifiercz' 1.3 $ ThreeCol nmaster delta ratio
+-- END Layouts }}}
+
+-- ManageHook {{{
+myManageHook :: ManageHook 
+myManageHook = composeAll
+    [ resource                        =? "Dialog"               --> ManageHelpers.doCenterFloat
+    , className                       =? "1password"            --> ManageHelpers.doCenterFloat
+    , stringProperty "WM_WINDOW_ROLE" =? "GtkFileChooserDialog" --> ManageHelpers.doCenterFloat
+    , className                       =? "tint2"                --> hasBorder False
+    , ManageHelpers.isFullscreen                                --> ManageHelpers.doFullFloat
+    , fullscreenManageHook
+    ] 
+-- END Manageahook }}}
 
 -- Key bindings {{{
 myKeys :: XConfig Layout -> M.Map (ButtonMask, KeySym) (X ())
 myKeys = \c -> mkKeymap c $
     [
+
     -- Base important keybinds
       ("M-<Return>",      spawn "alacritty")
     , ("M-<Space>",       spawn "dmenu_run")
@@ -140,13 +156,14 @@ myKeys = \c -> mkKeymap c $
     -- , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
     , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
     , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
-    , ("<XF86AudioMute>", spawn "amixer set Master toggle")
+    , ("<XF86AudioMute>",        spawn "amixer set Master toggle")
     ]
       where
         toggleFloat w = windows (\s -> if M.member w (W.floating s)
                                        then W.sink w s
                                        else (W.float w (W.RationalRect (1/6) (1/6) (4/6) (4/6)) s))
 
+-- Cycle onScreen stuff {{{
 isOnScreen :: ScreenId -> WindowSpace -> Bool
 isOnScreen s ws = s == unmarshallS (W.tag ws)
 
@@ -157,8 +174,11 @@ spacesOnCurrentScreen :: WSType
 spacesOnCurrentScreen = WSIs $ do
     s <- currentScreen
     return $ \x -> W.tag x /= "NSP" && isOnScreen s x
+-- }}}
 
+-- END Key bindings }}}
 
+-- Mouse Bindings {{{
 myMouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
     -- mod-button1 %! Set the window to floating mode and move by dragging
@@ -171,7 +191,34 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
                                          >> windows W.shiftMaster)
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
--- END Key bindings }}}
+-- END Mouse Bindings }}}
+
+-- Main Event {{{
+main :: IO ()
+main = xmonad
+     . ewmhFullscreen
+     . ewmh
+     . withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) defToggleStrutsKey
+     . fullscreenSupportBorder
+     $ myConfig
+
+myConfig = def
+    { 
+      modMask            = myModMask
+    , terminal           = myTerminal
+    , layoutHook         = myLayout
+    , handleEventHook    = fullscreenEventHook <+> debugEventsHook
+    , manageHook         = myManageHook
+    , keys               = myKeys
+    , mouseBindings      = myMouseBindings
+    , focusFollowsMouse  = myFocusFollowsMouse
+    , clickJustFocuses   = myClickJustFocuses
+    , borderWidth        = myBorderWidth
+    , normalBorderColor  = myNormalBorderColor
+    , focusedBorderColor = myFocusedBorderColor
+    , workspaces         = myWorkspaces
+    }
+-- END Main Event }}}
 
 -- Xmobar {{{
 myXmobarPP :: PP
@@ -202,15 +249,3 @@ myXmobarPP = def
     red      = xmobarColor "#ff5555" ""
     lowWhite = xmobarColor "#bbbbbb" ""
 -- END Xmobar }}}
-
--- Exception rules {{{
-myManageHook :: ManageHook
-myManageHook = composeAll
-    [ resource  =? "Dialog"             --> ManageHelpers.doCenterFloat
-    , className  =? "1password"         --> ManageHelpers.doCenterFloat
-    , stringProperty "WM_WINDOW_ROLE" =? "GtkFileChooserDialog"    --> ManageHelpers.doCenterFloat
-    , className =? "tint2"      --> hasBorder False
-    , ManageHelpers.isFullscreen          --> ManageHelpers.doFullFloat
-    , fullscreenManageHook
-    ]
--- END Exception rules }}}
