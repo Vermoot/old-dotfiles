@@ -3,12 +3,15 @@
 import XMonad
 import qualified XMonad.StackSet as W
 import qualified Data.Map.Strict as M
+import XMonad.Prompt
+import XMonad.Prompt.Theme
 
     -- Layouts
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.MouseResizableTile
+import XMonad.Layout.BinarySpacePartition
 
     -- Layout modifiers
 import XMonad.Layout.DraggingVisualizer
@@ -20,7 +23,8 @@ import XMonad.Layout.IndependentScreens
 import XMonad.Layout.Spacing
 import XMonad.Layout.NoFrillsDecoration
 import XMonad.Layout.NoBorders
--- import XMonad.Layout.Gaps
+import XMonad.Layout.DecorationAddons
+import XMonad.Layout.ButtonDecoration
 
     -- Hooks
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
@@ -42,6 +46,7 @@ import XMonad.Util.WorkspaceCompare (getSortByIndex)
 import XMonad.Actions.CycleWS
 import XMonad.Actions.TiledWindowDragging
 import XMonad.Actions.SwapWorkspaces
+import XMonad.Actions.PerWindowKeys
 -- END Imports }}}
 
 -- Defaults {{{
@@ -66,11 +71,12 @@ myLayout = windowArrange
          . avoidStruts
          . draggingVisualizer
          . spacingRaw False (Border 4 4 4 4) True (Border 4 4 4 4) True
+         . buttonDeco shrinkText defaultThemeWithButtons
 
          $ tiled
-       ||| Mirror tiled
        ||| Full 
-       ||| threeCol
+       ||| threeColMid
+       ||| emptyBSP
   where
     tiled    = mouseResizableTile {
                                     nmaster       = nmaster
@@ -82,7 +88,7 @@ myLayout = windowArrange
     ratio    = 1/2      -- Default proportion of screen occupied by master pane
     delta    = 6/100    -- Percent of screen to increment by when resizing panes
 
-    threeCol = magnifiercz' 1.3 $ ThreeCol nmaster delta ratio
+    threeColMid = magnifiercz' 2 $ ThreeColMid nmaster delta ratio
 -- END Layouts }}}
 
 -- ManageHook {{{
@@ -95,7 +101,7 @@ myManageHook = composeAll
     , ManageHelpers.isFullscreen                                --> ManageHelpers.doFullFloat
     , fullscreenManageHook
     ] 
--- END Manageahook }}}
+-- END ManageHook }}}
 
 -- Key bindings {{{
 myKeys :: XConfig Layout -> M.Map (ButtonMask, KeySym) (X ())
@@ -109,6 +115,7 @@ myKeys = \c -> mkKeymap c $
     , ("M-q",             spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi")
     , ("M-c",             kill)
     , ("M-f",             withFocused $ toggleFloat)
+    , ("M-h",             themePrompt def)
 
     -- Layout stuff
     , ("M-d",             sendMessage NextLayout)
@@ -153,10 +160,17 @@ myKeys = \c -> mkKeymap c $
     , ("M-.",            sendMessage (IncMasterN (-1)))
 
     -- Volume keys
-    -- , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
     , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
     , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
     , ("<XF86AudioMute>",        spawn "amixer set Master toggle")
+
+
+    -- Screenshots
+    , ("C-S-4",                 spawn "scrot -s ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png")
+    , ("C-S-3",                 spawn "scrot -s -b ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png")
+
+    -- Discord
+    , ("C-S-M1-e",              bindFirst [(className =? "Discord", spawn "xdotool key alt+Up")])
     ]
       where
         toggleFloat w = windows (\s -> if M.member w (W.floating s)
