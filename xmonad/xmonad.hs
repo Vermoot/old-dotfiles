@@ -12,10 +12,12 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.MouseResizableTile
 import XMonad.Layout.BinarySpacePartition
+import XMonad.Layout.SimpleFloat
 
     -- Layout modifiers
 import XMonad.Layout.DraggingVisualizer
 import XMonad.Layout.Magnifier
+import XMonad.Layout.Maximize
 import XMonad.Layout.ImageButtonDecoration
 import XMonad.Layout.WindowArranger
 import XMonad.Layout.ToggleLayouts
@@ -37,9 +39,11 @@ import XMonad.ManageHook
 import qualified XMonad.Hooks.ManageHelpers as ManageHelpers
 
     -- Utilities
+import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
 import XMonad.Util.Loggers
+import XMonad.Util.Paste
 import XMonad.Util.WorkspaceCompare (getSortByIndex)
 
     -- Actions
@@ -47,6 +51,9 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.TiledWindowDragging
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Actions.PerWindowKeys
+
+    -- Haskell
+import Text.ParserCombinators.ReadP
 -- END Imports }}}
 
 -- Defaults {{{
@@ -71,12 +78,14 @@ myLayout = windowArrange
          . avoidStruts
          . draggingVisualizer
          . spacingRaw False (Border 4 4 4 4) True (Border 4 4 4 4) True
-         . buttonDeco shrinkText defaultThemeWithButtons
+         . maximize
+         -- . imageButtonDeco shrinkText defaultThemeWithImageButtons
 
          $ tiled
        ||| Full 
        ||| threeColMid
        ||| emptyBSP
+       ||| simpleFloat
   where
     tiled    = mouseResizableTile {
                                     nmaster       = nmaster
@@ -91,11 +100,19 @@ myLayout = windowArrange
     threeColMid = magnifiercz' 2 $ ThreeColMid nmaster delta ratio
 -- END Layouts }}}
 
+-- StartupHook {{{
+myStartupHook :: X () 
+myStartupHook = do
+    spawnOnce "feh --bg-fill ./Pictures/Wallpapers/Paris_4k_Gruvbox.png"
+    spawnOnce "xset r rate 150 60"
+    spawnOnce "picom -b --experimental-backends"
+-- END StartupHook }}}
+
 -- ManageHook {{{
 myManageHook :: ManageHook 
 myManageHook = composeAll
     [ resource                        =? "Dialog"               --> ManageHelpers.doCenterFloat
-    , className                       =? "1password"            --> ManageHelpers.doCenterFloat
+    , className                       =? "1Password"            --> ManageHelpers.doCenterFloat
     , stringProperty "WM_WINDOW_ROLE" =? "GtkFileChooserDialog" --> ManageHelpers.doCenterFloat
     , className                       =? "tint2"                --> hasBorder False
     , ManageHelpers.isFullscreen                                --> ManageHelpers.doFullFloat
@@ -111,11 +128,11 @@ myKeys = \c -> mkKeymap c $
     -- Base important keybinds
       ("M-<Return>",      spawn "alacritty")
     , ("M-<Space>",       spawn "dmenu_run")
-    , ("C-<Space>",       spawn "rofi -combi-modi 'window,drun' -show combi -modi combi")
-    , ("M-q",             spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi")
+    , ("C-<Space>",       spawn "rofi -m -4 -combi-modi 'window,drun' -show combi -modi combi")
+    , ("M-q",             spawn ("if type xmonad; then xmonad --recompile && xmonad --restart;"
+                              ++ "else xmessage xmonad not in \\$PATH: \"$PATH\"; fi"))
     , ("M-c",             kill)
     , ("M-f",             withFocused $ toggleFloat)
-    , ("M-h",             themePrompt def)
 
     -- Layout stuff
     , ("M-d",             sendMessage NextLayout)
@@ -135,6 +152,7 @@ myKeys = \c -> mkKeymap c $
     , ("M-<Down>",        sendMessage ExpandSlave)
     , ("M-<Left>",        sendMessage Shrink)
     , ("M-<Right>",       sendMessage Expand)
+    , ("M-x",             withFocused (sendMessage . maximizeRestore))
 
     -- Focus workspaces & screens
     -- Forever remember the time when Elk said this "should be reasonably easy to do"
@@ -156,39 +174,63 @@ myKeys = \c -> mkKeymap c $
     , ("M-M1-o",          sequence_ [swapNextScreen, nextScreen] )
 
     -- Increase or decrease number of windows in the master area
-    , ("M-,",            sendMessage (IncMasterN 1))
-    , ("M-.",            sendMessage (IncMasterN (-1)))
+    , ("M-,",             sendMessage (IncMasterN 1))
+    , ("M-.",             sendMessage (IncMasterN (-1)))
 
-    -- Volume keys
+    -- Volume & Media keys
     , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
     , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
     , ("<XF86AudioMute>",        spawn "amixer set Master toggle")
+    , ("<XF86AudioPlay>",        spawn "playerctl -p spotify play-pause")
+    , ("<XF86AudioRewind>",      spawn "playerctl -p spotify previous")
+    , ("<XF86AudioForward>",     spawn "playerctl -p spotify next")
 
 
     -- Screenshots
-    , ("C-S-4",                 spawn "scrot -s ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png")
-    , ("C-S-3",                 spawn "scrot -s -b ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png")
+    , ("C-S-4",                 spawn ("scrot -s -b ~/scrot.png &&"
+                                    ++ "xclip -selection clipboard -t image/png ~/scrot.png &&"
+                                    ++ "rm ~/scrot.png"))
+    , ("C-S-3",                 spawn ("scrot -s -b ~/scrot.png &&"
+                                    ++ "xclip -selection clipboard -t image/png ~/scrot.png &&"
+                                    ++ "rm ~/scrot.png"))
 
-    -- Discord
-    , ("C-S-M1-e",              bindFirst [(className =? "Discord", spawn "xdotool key alt+Up")])
+    -- App-specific remaps
+    , ("C-S-M1-n",              bindFirst [ (className =? "discord", sendKey mod1Mask xK_Down)
+                                          , (className =? "firefox", sendKey controlMask xK_Tab)
+                                          , (pure True             , sendKey mehMask xK_n)])
+    , ("C-S-M1-e",              bindFirst [ (className =? "discord", sendKey mod1Mask xK_Up)
+                                          , (className =? "firefox", sendKey (controlMask .|. shiftMask) xK_Tab)
+                                          , (pure True             , sendKey mehMask xK_e)])
+    , ("C-S-M1-m",              bindFirst [ (className =? "discord", sendKey (controlMask .|. mod1Mask) xK_Down)
+                                          , (pure True             , sendKey mehMask xK_m)])
+    , ("C-S-M1-i",              bindFirst [ (className =? "discord", sendKey (controlMask .|. mod1Mask) xK_Up)
+                                          , (pure True             , sendKey mehMask xK_i)])
+    , ("C-S-M1-<Up>",           bindFirst [ (className =? "discord", sendKey (shiftMask .|. mod1Mask) xK_Up)
+                                          , (pure True             , sendKey mehMask xK_Up)])
+    , ("C-S-M1-<Down>",         bindFirst [ (className =? "discord", sendKey (shiftMask .|. mod1Mask) xK_Down)
+                                          , (pure True             , sendKey mehMask xK_Down)])
     ]
       where
+        mehMask = controlMask .|. mod1Mask .|. shiftMask
         toggleFloat w = windows (\s -> if M.member w (W.floating s)
                                        then W.sink w s
                                        else (W.float w (W.RationalRect (1/6) (1/6) (4/6) (4/6)) s))
 
--- Cycle onScreen stuff {{{
-isOnScreen :: ScreenId -> WindowSpace -> Bool
-isOnScreen s ws = s == unmarshallS (W.tag ws)
+        -- specificRemaps :: [(Query Bool, String] -> X ()
+        -- specificRemaps cond keybind = 
 
-currentScreen :: X ScreenId
-currentScreen = gets (W.screen . W.current . windowset)
+        -- Cycle onScreen stuff {{{
+        isOnScreen :: ScreenId -> WindowSpace -> Bool
+        isOnScreen s ws = s == unmarshallS (W.tag ws)
 
-spacesOnCurrentScreen :: WSType
-spacesOnCurrentScreen = WSIs $ do
-    s <- currentScreen
-    return $ \x -> W.tag x /= "NSP" && isOnScreen s x
--- }}}
+        currentScreen :: X ScreenId
+        currentScreen = gets (W.screen . W.current . windowset)
+
+        spacesOnCurrentScreen :: WSType
+        spacesOnCurrentScreen = WSIs $ do
+            s <- currentScreen
+            return $ \x -> isOnScreen s x
+        -- }}}
 
 -- END Key bindings }}}
 
@@ -199,7 +241,8 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
     [ ((modMask, button1), dragWindow)
     -- [ ((modMask, button1), \w -> ifM (withWindowSet (M.member w . W.floating) (mouseMoveWindow w) (dragWindow w)))
     -- mod-button2 %! Raise the window to the top of the stack
-    , ((modMask, button2), windows . (W.shiftMaster .) . W.focusWindow)
+    , ((modMask, button2), \w -> focus w >> mouseMoveWindow w
+                                          >> windows W.shiftMaster)
     -- mod-button3 %! Set the window to floating mode and resize by dragging
     , ((modMask, button3), \w -> focus w >> mouseResizeWindow w
                                          >> windows W.shiftMaster)
@@ -212,6 +255,7 @@ main :: IO ()
 main = xmonad
      . ewmhFullscreen
      . ewmh
+     . docks
      . withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) defToggleStrutsKey
      . fullscreenSupportBorder
      $ myConfig
@@ -222,6 +266,7 @@ myConfig = def
     , terminal           = myTerminal
     , layoutHook         = myLayout
     , handleEventHook    = fullscreenEventHook <+> debugEventsHook
+    , startupHook        = myStartupHook
     , manageHook         = myManageHook
     , keys               = myKeys
     , mouseBindings      = myMouseBindings
