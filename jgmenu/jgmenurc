@@ -1,0 +1,41 @@
+stay_alive          = 1
+tint2_look          = 0
+csv_cmd = pmenu
+
+position_mode       = fixed
+menu_halign         = left
+menu_valign         = top
+menu_margin_x       = 46
+menu_margin_y       = 8
+menu_width          = 200
+sub_spacing         = 4
+
+menu_padding_top    = 0
+menu_padding_right  = 0
+menu_padding_bottom = 0
+menu_padding_left   = 0
+menu_radius         = 12
+menu_border         = 1
+
+terminal_exec       = alacritty
+terminal_args       = -e
+hover_delay         = 30
+sub_hover_action    = 1
+tabs = 10
+item_margin_y       = 5
+item_height         = 30
+item_padding_x      = 8
+item_radius         = 4
+item_border         = 0
+sep_height          = 5
+font                = SF Compact Rounded Medium 14px
+icon_size           = 24
+icon_theme          = kora
+
+color_menu_bg       = #3c3836 100
+color_norm_bg       = #3c3836 0
+color_norm_fg       = #ebdbb2 100
+color_sel_bg        = #458588 60
+color_sel_fg        = #ebdbb2 100
+color_sep_fg        = #ebdbb2 40
+color_menu_border   = #665c54 100

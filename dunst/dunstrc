@@ -1,0 +1,68 @@
+[global]
+	font       = SF Compact Rounded
+	#geometry   = "500x5-40-40"
+	shrink     = true
+
+	width      = (0, 500)
+	height 		 = (0, 200)
+	origin     = top-center
+	offset     = 0x40
+	follow     = none
+
+	markup     = full
+	format     = "%s\n%b"
+	alignment  = center
+	word_wrap  = true
+
+	dmenu      = menu
+	browser    = chromium
+
+	icon_position  = left
+	max_icon_size  = 64
+	icon_path      = /dev/null
+
+
+	# borders
+	corner_radius       = 8
+	padding             = 10
+	frame_width         = 1
+	frame_color         = "#ebdbb2"
+	separator_height    = 2
+	separator_color     = frame
+	horizontal_padding  = 25
+
+	idle_threshold      = 0
+	show_indicators     = false
+	show_age_threshold  = 60
+
+	#close              = ctrl+space
+	#close_all          = ctrl+shift+space
+	#history            = ctrl+shift+grave
+	#context            = ctrl+shift+period
+
+	mouse_left_click    = do_action
+	mouse_middle_click  = close_current
+	mouse_right_click   = context
+
+[experimental]
+	per_monitor_dpi     = true
+
+[urgency_low]
+	background          = "#3c3836"
+	foreground          = "#ebdbb2"
+	frame_color         = "#ebdbb2"
+	timeout             = 7
+
+[urgency_normal]
+	background          = "#3c3836"
+	foreground          = "#ebdbb2"
+	frame_color         = "#ebdbb2"
+	timeout             = 7
+
+[urgency_critical]
+	background          = "#ffffff"
+	foreground          = "#5b5f66"
+	frame_color         = "#f2f2f2"
+	timeout             = 0
+
+# vim: ft=conf

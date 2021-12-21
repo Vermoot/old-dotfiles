@@ -29,9 +29,6 @@ local capi =
     awesome = awesome,
     root = root,
 }
--- local nice = require("nice")
--- nice()
-
 -- END Imports }}}
 
 -- {{{ Error handling
@@ -61,12 +58,18 @@ end
 
 -- DEFAULTS {{{
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/zenburn/theme.lua")
+
+-- local nice = require("nice")
+-- nice()
+
 beautiful.gap_single_client = true
 
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
+-- meh = "Control, Shift, Mod1"
+meh = { "Control", "Shift", "Mod1" }
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -322,19 +325,20 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "d",      function () awful.layout.inc( 1)                end),
 
 
-    -- Media keys
-    awful.key({  }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 5%+ unmute",    false) end),
-    awful.key({  }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 5%- unmute",    false) end),
-    awful.key({  }, "XF86AudioMute",        function () awful.util.spawn("amixer set Master toggle",        false) end),
+    -- Volume keys
+    awful.key({}, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 5%+ unmute",    false) end),
+    awful.key({}, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 5%- unmute",    false) end),
+    awful.key({}, "XF86AudioMute",        function () awful.util.spawn("amixer set Master toggle",        false) end),
 
-    awful.key({  }, "XF86AudioPlay",        function () awful.util.spawn("playerctl -p spotify play-pause", false) end),
-    awful.key({  }, "XF86AudioRewind",      function () awful.util.spawn("playerctl -p spotify previous",   false) end),
-    awful.key({  }, "XF86AudioForward",     function () awful.util.spawn("playerctl -p spotify next",       false) end),
+    -- Media keys
+    awful.key({}, "XF86AudioPlay",        function () awful.util.spawn("playerctl -p spotify play-pause", false) end),
+    awful.key({}, "XF86AudioRewind",      function () awful.util.spawn("playerctl -p spotify previous",   false) end),
+    awful.key({}, "XF86AudioForward",     function () awful.util.spawn("playerctl -p spotify next",       false) end),
 
     -- Utils
     awful.key({"Control" }, "space", function () awful.util.spawn("rofi -m -4 -combi-modi 'window,drun' -show combi -modi combi",                                     false) end),
-    awful.key({ modkey,  }, "s",     function () awful.spawn.with_shell("scrot -s ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png",    false) end),
-    awful.key({ modkey,  }, "r",     function () awful.spawn.with_shell("scrot -s -b ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png", false) end)
+    awful.key({ modkey,  }, "s",     function () awful.spawn.with_shell("scrot -s -f -b ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png",    false) end)
+    -- awful.key({ modkey,  }, "r",     function () awful.spawn.with_shell("scrot -s -b ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png", false) end)
 
 )
 
@@ -355,19 +359,29 @@ clientkeys = gears.table.join(
         end),
     awful.key({ modkey, "Control" }, "l", function (c) c:swap(awful.client.getmaster()) end),
     awful.key({ modkey, "Control" }, "o", function (c) c:move_to_screen()               end),
-    awful.key({ modkey,           }, "x",
-        function (c)
-            c.maximized = not c.maximized
-            c:raise()
-        end),
+    awful.key({ modkey,           }, "x", function (c) c.maximized = not c.maximized c:raise() end)
+)
 
-    awful.key({ "Control", "Mod1", "Shift" }, "k",
-        function (c)
-            awful.util.spawn("notify-send 'coucou'")
-            if c.class == "firefox" then
-                awful.util.spawn("xdotool key ctrl+Tab")
-            end
-        end)
+
+local function xdotool(combination)
+    return awful.util.spawn("xdotool key --clearmodifiers" .. combination)
+end
+
+firefox_keys = gears.table.join(
+    awful.key(meh, "n", function (c) awful.util.spawn("xdotool key --clearmodifiers Control+Tab") end),
+    -- awful.key(meh, "n", xdotool("Control+Tab") end),
+    awful.key(meh, "e", function (c) awful.util.spawn("xdotool key --clearmodifiers Control+Shift+Tab") end)
+)
+
+discord_keys = gears.table.join(
+    awful.key(meh, "n", function (c) awful.util.spawn("xdotool key --clearmodifiers Alt+Down") end),
+    awful.key(meh, "e", function (c) awful.util.spawn("xdotool key --clearmodifiers Alt+Up") end),
+
+    awful.key(meh, "Down", function (c) awful.util.spawn("xdotool key --clearmodifiers Alt+Shift+Down") end),
+    awful.key(meh, "Up", function (c) awful.util.spawn("xdotool key --clearmodifiers Alt+Shift+Up") end),
+
+    awful.key(meh, "m", function (c) awful.util.spawn("xdotool key --clearmodifiers Control+Alt+Down") end),
+    awful.key(meh, "i", function (c) awful.util.spawn("xdotool key --clearmodifiers Control+Alt+Up") end)
 )
 
 
@@ -406,6 +420,14 @@ awful.rules.rules = {
                      maximized_vertical = false,
                      maximized = false,
      }
+    },
+
+    { rule = {class = "firefox"},
+      properties = { keys = gears.table.join(clientkeys, firefox_keys),}
+    },
+
+    { rule = {class = "discord"},
+      properties = { keys = gears.table.join(clientkeys, discord_keys),}
     },
 
     -- Floating clients.

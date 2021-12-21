@@ -67,8 +67,11 @@ myBorderWidth        = 1
 myNormalBorderColor  = "#665c54"
 myFocusedBorderColor = "#ebdbb2"
 
-myWorkspaces         = withScreen 1 (map show [1..6 :: Int])
-                    ++ withScreen 2 (map show [1..6 :: Int])
+-- myWorkspaces         = withScreen 1 (map show [1..6 :: Int])
+                    -- ++ withScreen 2 (map show [1..6 :: Int])
+myWorkspaces :: [[Char]]
+myWorkspaces = ["1","2","3","4","5","6"]
+
 -- myWorkspaces = ["web", "discord", "misc", "misc2","misc3", "misc4", "spotify"]
 
 -- END Defaults}}}
@@ -117,6 +120,7 @@ myManageHook = composeAll
     , className                       =? "tint2"                --> hasBorder False
     , ManageHelpers.isFullscreen                                --> ManageHelpers.doFullFloat
     , fullscreenManageHook
+    , manageDocks
     ] 
 -- END ManageHook }}}
 
@@ -221,6 +225,7 @@ myKeys = \c -> mkKeymap c $
 
         -- Cycle onScreen stuff {{{
         isOnScreen :: ScreenId -> WindowSpace -> Bool
+        -- isOnScreen s = (s ==) . unmarshallS . W.tag
         isOnScreen s ws = s == unmarshallS (W.tag ws)
 
         currentScreen :: X ScreenId

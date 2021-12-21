@@ -36,6 +36,8 @@ Plug 'akinsho/bufferline.nvim'
 Plug 'elkowar/yuck.vim'
 Plug 'fladson/vim-kitty'
 Plug 'baskerville/vim-sxhkdrc'
+Plug 'junegunn/vim-easy-align'
+Plug 'eraserhd/parinfer-rust'
 
 " Color Schemes
 Plug 'joshdick/onedark.vim'
@@ -98,12 +100,19 @@ nnoremap d "_d
 vnoremap d "_d
 " x doesn't cut but deletes. Not in visual mode though.
 nnoremap x "_x
-" c doesn't cut but delets, fucking hell.
+" c doesn't cut but deletes, fucking hell.
 nnoremap c "_c
+"
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
 
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 " }}}
 
-" coc.nvim stuff {{{
+"Plugin configs {{{
+
+" coc.nvim {{{
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -266,5 +275,37 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR> 
+
+" }}}
+
+" Sneak {{{
+
+let g:sneak#label = 1
+
+" case insensitive sneak
+let g:sneak#use_ic_scs = 1
+
+" immediately move to the next instance of search, if you move the cursor sneak is back to default behavior
+let g:sneak#s_next = 1
+
+" remap so I can use , and ; with f and t
+map gS <Plug>Sneak_,
+map gs <Plug>Sneak_;
+
+" Change the colors
+" highlight Sneak guifg=black guibg=#00C7DF ctermfg=black ctermbg=cyan
+" highlight SneakScope guifg=red guibg=yellow ctermfg=red ctermbg=yellow
+
+" Cool prompts
+let g:sneak#prompt = '🕵'
+let g:sneak#prompt = '🔎'
+
+" I like quickscope better for this since it keeps me in the scope of a single line
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
+" }}}
 
 " }}}

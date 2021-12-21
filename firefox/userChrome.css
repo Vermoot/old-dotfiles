@@ -57,10 +57,6 @@ browser[type="content"] > html,
 }
 /*}}}*/
 
-/* Colors {{{ */
-
-/* END Colors }}} */
-
 
 /* Hide macOS traffic lights */
 .titlebar-buttonbox-container, .titlebar-spacer {
@@ -227,31 +223,31 @@ transition: .2s ease .8s;
 }
 
 #navigator-toolbox {
-width: 5% !important;
-left: calc(45% + var(--sidebar-min-width) - 30%) !important;
-position: fixed !important;
-display: block;
-transition: left 0ms linear 882ms,
-            width 0ms linear 882ms,
-            transform 82ms linear,
-            opacity 82ms linear !important;
-transition-delay: var(--uc-autohide-toolbox-delay) !important;
-transform: translate(0, var(--uc-toolbox-translation));
-opacity: 1;
-line-height: 0;
-z-index: 2;
-pointer-events: all;
-margin: 10px 10px 0;
+   width: 5% !important;
+   left: calc(45% + var(--sidebar-min-width) - 30%) !important;
+   position: fixed !important;
+   display: block;
+   transition: left 0ms linear 882ms,
+               width 0ms linear 882ms,
+               transform 82ms linear,
+               opacity 82ms linear !important;
+   transition-delay: var(--uc-autohide-toolbox-delay) !important;
+   transform: translate(0, var(--uc-toolbox-translation));
+   opacity: 1;
+   line-height: 0;
+   z-index: 2;
+   pointer-events: all;
+   margin: 10px 10px 0;
 }
 
 #mainPopupSet:hover ~ box > toolbox,
 #navigator-toolbox:hover,
 #navigator-toolbox:focus-within{
-width: calc(100% - var(--sidebar-min-width) - 20px) !important;
-left: var(--sidebar-min-width) !important;
-transition-delay: 0ms !important;
-transform: translate(0px, 0px);
-opacity: 1;
+   width: calc(100% - var(--sidebar-min-width) - 20px) !important;
+   left: var(--sidebar-min-width) !important;
+   transition-delay: 0ms !important;
+   transform: translate(0px, 0px);
+   opacity: 1;
 }
 
 #navigator-toolbox > *{ line-height: normal; pointer-events: auto }
@@ -326,7 +322,9 @@ fill: #ebdbb2 !important;
 color: #ebdbb2 !important;
 }
 
-
+#nav-bar-customization-target > toolbarbutton > .toolbarbutton-icon:hover {
+   background-color: var(--gb-dark-aqua);
+}
 
 
 
@@ -376,6 +374,7 @@ padding: 5px 6px 2px;
 #PlacesToolbarItems > toolbarseparator {
 visibility: hidden !important;
 }
+
 
 #urlbar:not([focused="true"]):-moz-lwtheme > #urlbar-background, #navigator-toolbox #searchbar:not(:focus-within):-moz-lwtheme {
 border-color: #665c54;
