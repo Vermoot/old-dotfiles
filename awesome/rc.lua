@@ -333,8 +333,8 @@ globalkeys = gears.table.join(
 
     -- Utils
     awful.key({"Control" }, "space", function () awful.util.spawn("rofi -m -4 -combi-modi 'window,drun' -show combi -modi combi",                                     false) end),
-    awful.key({ modkey,  }, "s",     function () awful.util.spawn("scrot -s ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png",    false) end),
-    awful.key({ modkey,  }, "r",     function () awful.util.spawn("scrot -s -b ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png", false) end)
+    awful.key({ modkey,  }, "s",     function () awful.spawn.with_shell("scrot -s ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png",    false) end),
+    awful.key({ modkey,  }, "r",     function () awful.spawn.with_shell("scrot -s -b ~/scrot.png && xclip -selection clipboard -t image/png ~/scrot.png && rm ~/scrot.png", false) end)
 
 )
 
@@ -343,10 +343,15 @@ clientkeys = gears.table.join(
     awful.key({ modkey,           }, "c", function (c) c:kill()                         end),
     awful.key({ modkey,           }, "f",
         function(c)
-            c.floating = not c.floating
-            awful.titlebar.toggle(c)
-            awful.placement.centered(c)
-            awful.placement.restore(c)
+            if c.floating then
+                c.floating = false
+                awful.titlebar.hide(c)
+            else
+                c.floating = true
+                awful.titlebar.show(c)
+                c:geometry({width=1200, height=700})
+                awful.placement.centered(c)
+            end
         end),
     awful.key({ modkey, "Control" }, "l", function (c) c:swap(awful.client.getmaster()) end),
     awful.key({ modkey, "Control" }, "o", function (c) c:move_to_screen()               end),
@@ -354,7 +359,15 @@ clientkeys = gears.table.join(
         function (c)
             c.maximized = not c.maximized
             c:raise()
-        end) 
+        end),
+
+    awful.key({ "Control", "Mod1", "Shift" }, "k",
+        function (c)
+            awful.util.spawn("notify-send 'coucou'")
+            if c.class == "firefox" then
+                awful.util.spawn("xdotool key ctrl+Tab")
+            end
+        end)
 )
 
 
@@ -398,22 +411,9 @@ awful.rules.rules = {
     -- Floating clients.
     { rule_any = {
         instance = {
-          "DTA",  -- Firefox addon DownThemAll.
-          "copyq",  -- Includes session name in class.
-          "pinentry",
         },
         class = {
-          "Arandr",
-          -- "Nautilus",
-          "Blueman-manager",
-          "Gpick",
-          "Kruler",
-          "MessageWin",  -- kalarm.
-          "Sxiv",
-          "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-          "Wpa_gui",
-          "veromix",
-          "xtightvncviewer"},
+         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -421,9 +421,6 @@ awful.rules.rules = {
           "Event Tester",  -- xev.
         },
         role = {
-          "AlarmWindow",  -- Thunderbird's calendar.
-          "ConfigManager",  -- Thunderbird's about:config.
-          "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
 
