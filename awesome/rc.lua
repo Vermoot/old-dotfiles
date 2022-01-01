@@ -295,12 +295,10 @@ local function swap_screens()
     -- awful.screen.focus_relative(1)
 end
 
-local function swap_next_tag()
-    local t = client.focus.screen.selected_tag
-    local tags = awful.screen.focused().tags
-    local nt = tags[gmath.cycle(#tags, t.index+1)]
-    t:swap(nt)
-    -- awful.tag.viewnext()
+local function next_screen()
+    local s = awful.screen.focused()
+    local s2 = screen[gmath.cycle(screen.instances(), s.index + 1)]
+    s2.selected_tag:clients()[0]:raise()
 end
 
 local function swap_prev_tag()
@@ -511,7 +509,7 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c) : setup {
+    awful.titlebar(c, {size = 24}) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
