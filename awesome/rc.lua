@@ -195,7 +195,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 40})
+    s.mywibox = awful.wibar({ position = "top", screen = s})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -305,6 +305,14 @@ local function swap_prev_tag()
     local t = client.focus.screen.selected_tag
     local tags = awful.screen.focused().tags
     local nt = tags[gmath.cycle(#tags, t.index-1)]
+    t:swap(nt)
+    -- awful.tag.viewnext()
+end
+
+local function swap_next_tag()
+    local t = client.focus.screen.selected_tag
+    local tags = awful.screen.focused().tags
+    local nt = tags[gmath.cycle(#tags, t.index+1)]
     t:swap(nt)
     -- awful.tag.viewnext()
 end
