@@ -195,7 +195,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 40})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -218,11 +218,33 @@ end)
 -- }}}
 
 -- {{{ Mouse bindings
+clientbuttons = gears.table.join(
+    awful.button({ }, 1, function (c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+    end),
+    awful.button({ modkey }, 1, function (c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+        awful.mouse.client.move(c)
+    end),
+    awful.button({ modkey }, 3, function (c)
+        c:emit_signal("request::activate", "mouse_click", {raise = true})
+        awful.mouse.client.resize(c)
+    end),
+    awful.button({}, 14, function () awful.tag.viewnext() end),
+    awful.button({}, 15, function () awful.tag.viewprev() end)
+)
+
 root.buttons(gears.table.join(
+    clientbuttons,
     awful.button({ }, 3, function () mymainmenu:toggle() end)
-    -- awful.button({ }, 4, awful.tag.viewnext),
-    -- awful.button({ }, 5, awful.tag.viewprev)
 ))
+
+firefox_buttons = gears.table.join(
+    awful.button({}, 10, function () awful.util.spawn("xdotool key --clearmodifiers Ctrl+Tab") end),
+    awful.button({}, 11, function () awful.util.spawn("xdotool key --clearmodifiers Ctrl+Shift+Tab") end),
+    awful.button({}, 13, function () awful.util.spawn("xdotool key --clearmodifiers Ctrl+w") end),
+    awful.button({}, 12, function () awful.util.spawn("xdotool key --clearmodifiers Ctrl+Shift+t") end)
+)
 
 function double_click_event_handler(double_click_event)
     if double_click_timer then
@@ -289,6 +311,15 @@ local function swap_prev_tag()
     -- awful.tag.viewnext()
 end
 
+local function toggle_gaps()
+    local t = awful.screen.focused().selected_tag
+    if t.gap == beautiful.useless_gap then
+        t.gap = 0
+    else
+        t.gap = beautiful.useless_gap
+    end
+end
+
 -- END Functions }}}
 
 globalkeys = gears.table.join(
@@ -309,6 +340,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Mod1"    }, "i",      function () swap_next_tag()                end),
     awful.key({ modkey, "Mod1"    }, "m",      function () swap_prev_tag()                end),
     awful.key({ modkey,           }, "o",      function () awful.screen.focus_relative(1) end),
+    awful.key({ modkey,           }, "g",      function () toggle_gaps() end),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end),
@@ -385,20 +417,6 @@ discord_keys = gears.table.join(
 )
 
 
-clientbuttons = gears.table.join(
-    awful.button({ }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-    end),
-    awful.button({ modkey }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.move(c)
-    end),
-    awful.button({ modkey }, 3, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.resize(c)
-    end)
-)
-
 -- Set keys
 root.keys(globalkeys)
 -- }}}
@@ -423,7 +441,8 @@ awful.rules.rules = {
     },
 
     { rule = {class = "firefox"},
-      properties = { keys = gears.table.join(clientkeys, firefox_keys),}
+      properties = { keys = gears.table.join(clientkeys, firefox_keys),
+                     buttons = gears.table.join(clientbuttons, firefox_buttons)}
     },
 
     { rule = {class = "discord"},
@@ -432,18 +451,14 @@ awful.rules.rules = {
 
     -- Floating clients.
     { rule_any = {
-        instance = {
-        },
+        instance = { },
         class = {
+          "1Password",
          },
-
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
         name = {
           "Event Tester",  -- xev.
         },
-        role = {
-        }
+        role = { }
       }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
@@ -455,10 +470,6 @@ awful.rules.rules = {
     { rule_any = { name = { "xfce4-panel" } }, properties = { ontop = true } },
     { rule_any = { name = { "menu" } }, properties = { border_width=0 } }
 
-
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
 }
 -- }}}
 
@@ -533,4 +544,13 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- Focus firefox when clicking on a link
+client.connect_signal("property::urgent", function(c)
+    if c.class == "firefox" then
+        c.minimized = false
+        c:jump_to()
+    end
+end)
+
 -- }}}

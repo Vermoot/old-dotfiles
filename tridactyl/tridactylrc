@@ -3,6 +3,7 @@ set configversion 2.0
 set theme gruvsur
 set smoothscroll true
 set hintchars ntesirhdoaufclpywmgxkvjbqz
+set modeindicator true
 " ---- END General Settings ---- }}}
 
 " ---- Binds ---- {{{
@@ -181,4 +182,6 @@ autocmd DocStart https://www.youtube.com/watch mode ignore
 autocmd DocStart https://monkeytype.com/ mode ignore
 autocmd DocLoad ^https://github.com/tridactyl/tridactyl/issues/new$ issue
 autocmd TriStart .* source_quiet
+autocmd https://www.youtube.com/ FullscreenEnter set https://www.youtube.com/ modeindicator false
+autocmd https://www.youtube.com/ FullscreenLeft set https://www.youtube.com/ modeindicator true
 " ---- END Autocmds ---- }}}

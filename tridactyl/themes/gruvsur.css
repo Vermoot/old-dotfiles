@@ -75,7 +75,7 @@
 }
 
 :root #completions > div {
-    max-height: calc(20 * var(--tridactyl-cmplt-option-height));
+    max-height: calc(11 * var(--tridactyl-cmplt-option-height));
     min-height: calc(10 * var(--tridactyl-cmplt-option-height));
 }
 
